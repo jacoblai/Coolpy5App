@@ -56,7 +56,7 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>域名</label>
-					<input id='ip_svcurl' type="text" class="mui-input-clear mui-input" placeholder="请输入服务商平台域名网址">
+					<input id='ip_svcurl' type="text" class="mui-input-clear mui-input" placeholder="http://192.168.1.1:6543">
 				</div>
 			</form>
 			<div class="mui-content-padded">
@@ -74,29 +74,37 @@
 						ip_svcurl.value = localStorage.getItem('$svc')
 					}
 					bt_testsvc.addEventListener('tap', function() {
-						if(ip_svcurl.value) {
-							mui.toast('正在执行网络请求.....');
+						if(ip_svcurl.value && checkUrl(ip_svcurl.value)) {
+							var waiting = plus.nativeUI.showWaiting('正在处理中...');
 							$.ajax(ip_svcurl.value + '/api/sys/version', {
-								dataType: 'json', //服务器返回json格式数据
-								type: 'get', //HTTP请求类型
-								timeout: 2000, //超时时间设置为10秒；
+								dataType: 'json', 
+								type: 'get',
+								timeout: 10000, 
 								headers: {
 									'Content-Type': 'application/json'
 								},
 								success: function(data) {
+									waiting.close();
 									$.alert('成功!服务端版本号：v' + data.data, '酷痞物联', function() {
 										localStorage.setItem('$svc', ip_svcurl.value)
 										mui.back()
 									});
 								},
 								error: function(xhr, type, errorThrown) {
-									$.alert('失败!请重新确认服务端域名', '酷痞物联', function() {});
+									waiting.close();
+									$.alert('失败!请重新确认服务商域名', '酷痞物联');
 								}
 							});
+						} else {
+							$.alert('服务商域名不是有效的', '酷痞物联');
 						}
 					}, false);
 				});
 			}(mui, document));
+			var checkUrl = function(url) {
+				u = /^(http|https)\:\/\/([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|localhost|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(\/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$/
+				return u.test(url)
+			};
 		</script>
 	</body>
 

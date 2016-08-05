@@ -266,7 +266,8 @@
 					"images/qihoo.png",
 					"images/qq.png",
 					"images/sinaweibo.png",
-					"images/weixin.png"
+					"images/weixin.png",
+					"js/base64.js"
 				],
 				"refer": [
 					"unlock.html",

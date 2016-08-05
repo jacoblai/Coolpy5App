@@ -4,7 +4,9 @@
 			"setting.html"
 		],
 		"resources": [
-			"js/app.js"
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
 		]
 	},
 	"login.html": {
@@ -16,7 +18,9 @@
 			"css/style.css",
 			"images/weixin.png",
 			"images/qq.png",
-			"js/mui.enterfocus.js"
+			"js/mui.enterfocus.js",
+			"fonts/mui.ttf",
+			"js/base64.js"
 		],
 		"refer": [
 			"main.html",
@@ -41,6 +45,9 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"css/mui.min.css"
+		],
+		"refer": [
+			"login.html"
 		]
 	},
 	"set_svc.html": {
