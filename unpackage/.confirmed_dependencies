@@ -6,7 +6,8 @@
 		"resources": [
 			"js/app.js",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"fonts/mui.ttf"
 		]
 	},
 	"login.html": {
@@ -44,7 +45,11 @@
 			"js/mui.view.js",
 			"js/app.js",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"images/user-photo.png",
+			"images/iconfont-tianjia.png",
+			"images/cbd.jpg",
+			"images/favicon.png"
 		],
 		"refer": [
 			"login.html"
