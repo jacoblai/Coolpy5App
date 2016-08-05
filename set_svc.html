@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				margin-top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设置服务商</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>域名</label>
+					<input id='ip_svcurl' type="text" class="mui-input-clear mui-input" placeholder="请输入服务商平台域名网址">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='bt_testsvc' class="mui-btn mui-btn-block mui-btn-primary">设置</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var bt_testsvc = doc.getElementById('bt_testsvc');
+					var ip_svcurl = doc.getElementById('ip_svcurl');
+					if(localStorage.getItem('$svc')) {
+						ip_svcurl.value = localStorage.getItem('$svc')
+					}
+					bt_testsvc.addEventListener('tap', function() {
+						if(ip_svcurl.value) {
+							mui.toast('正在执行网络请求.....');
+							$.ajax(ip_svcurl.value + '/api/sys/version', {
+								dataType: 'json', //服务器返回json格式数据
+								type: 'get', //HTTP请求类型
+								timeout: 2000, //超时时间设置为10秒；
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								success: function(data) {
+									$.alert('成功!服务端版本号：v' + data.data, '酷痞物联', function() {
+										localStorage.setItem('$svc', ip_svcurl.value)
+										mui.back()
+									});
+								},
+								error: function(xhr, type, errorThrown) {
+									$.alert('失败!请重新确认服务端域名', '酷痞物联', function() {});
+								}
+							});
+						}
+					}, false);
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>
