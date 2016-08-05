@@ -194,7 +194,10 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf",
 					"css/feedback-page.css",
-					"images/iconfont-tianjia.png"
+					"images/iconfont-tianjia.png",
+					"images/user-photo.png",
+					"images/cbd.jpg",
+					"images/favicon.png"
 				],
 				"refer": [
 					"login.html"
@@ -310,7 +313,6 @@
 			"resources": [
 				"js/service.js",
 				"libs/easymob-webim-sdk/quickstart.md",
-				"images/user-photo.png",
 				"README.md"
 			]
 		}
