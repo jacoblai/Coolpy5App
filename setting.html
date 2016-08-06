@@ -196,12 +196,12 @@
 								</a>
 								<div class="mui-button-row">
 									<a class="mui-btn mui-btn-primary" href="#changeuserinfo">账号设置</a>&nbsp;&nbsp;
-									<a class="mui-btn mui-btn-primary" href="#" id="bt_copyukey">查看密钥</a>&nbsp;&nbsp;
+									<a class="mui-btn mui-btn-primary" href="#" id="bt_copyukey">提取密钥</a>&nbsp;&nbsp;
 									<a class="mui-btn mui-btn-danger" href="#changepwd">修改密码</a>
 								</div>
 							</li>
 						</ul>
-						<ul class="mui-table-view mui-table-view-chevron">
+						<!--<ul class="mui-table-view mui-table-view-chevron">
 							<li class="mui-table-view-cell">
 								<a id="rate" class="mui-navigate-right">评分鼓励</a>
 							</li>
@@ -213,11 +213,11 @@
 							<li class="mui-table-view-cell">
 								<a href="#notifications" class="mui-navigate-right">新消息通知</a>
 							</li>
-						</ul>
+						</ul>-->
 						<ul class="mui-table-view mui-table-view-chevron">
-							<li class="mui-table-view-cell">
+							<!--<li class="mui-table-view-cell">
 								<a id="feedback-btn" href="#feedback" class="mui-navigate-right">问题反馈</a>
-							</li>
+							</li>-->
 							<li class="mui-table-view-cell">
 								<a href="#about" class="mui-navigate-right">关于酷痞 <i class="mui-pull-right update">v5.0.1.5</i></a>
 							</li>
@@ -331,16 +331,19 @@
 			<div class="mui-content">
 				<div class="mui-card">
 					<div class="mui-card-header mui-card-media">
-						<img src="images/favicon.png" width="64px" />
+						<img src="images/favicon.png" />
 						<div class="mui-media-body">
-							酷痞物联
+							酷痞物联v5
+							<p>icoolpy.com</p>
 						</div>
 					</div>
 					<div class="mui-card-content">
-						<img src="images/cbd.jpg" alt="" width="100%" />
+						<img src="images/yuantiao.jpg" alt="" width="100%" />
 					</div>
 					<div class="mui-card-footer">
-						<a class="mui-card-link">ICOOLPY.COM</a>
+						<a class="mui-card-link" href="http://icoolpy.com">喜欢</a>
+						<a class="mui-card-link" href="http://icoolpy.com">评论</a>
+						<a class="mui-card-link" href="http://icoolpy.com">更多</a>
 					</div>
 				</div>
 			</div>
@@ -450,20 +453,33 @@
 		});
 		//初始化单页的区域滚动
 		mui('.mui-scroll-wrapper').scroll();
-		//分享操作 
-		var shares = {};
-		mui.plusReady(function() {
-			plus.share.getServices(function(s) {
-				if(s && s.length > 0) {
-					for(var i = 0; i < s.length; i++) {
-						var t = s[i];
-						shares[t.id] = t;
-					}
+
+		//处理点击事件，需要打开原生浏览器
+		mui('body').on('tap', 'a', function(e) {
+			var href = this.getAttribute('href');
+			if(href) {
+				if(window.plus) {
+					plus.runtime.openURL(href);
+				} else {
+					location.href = href;
 				}
-			}, function() {
-				console.log("获取分享服务列表失败");
-			});
+			}
 		});
+
+		//		//分享操作 
+		//		var shares = {};
+		//		mui.plusReady(function() {
+		//			plus.share.getServices(function(s) {
+		//				if(s && s.length > 0) {
+		//					for(var i = 0; i < s.length; i++) {
+		//						var t = s[i];
+		//						shares[t.id] = t;
+		//					}
+		//				}
+		//			}, function() {
+		//				console.log("获取分享服务列表失败");
+		//			});
+		//		});
 
 		window.addEventListener('userInfoRefresh', function(event) {
 			var state = app.getState();
@@ -570,69 +586,69 @@
 			});
 		});
 
-		//分享链接点击事件
-		document.getElementById("share").addEventListener('tap', function() {
-			var ids = [{
-					id: "weixin",
-					ex: "WXSceneSession"
-				}, {
-					id: "weixin",
-					ex: "WXSceneTimeline"
-				}, {
-					id: "sinaweibo"
-				}, {
-					id: "tencentweibo"
-				}, {
-					id: "qq"
-				}],
-				bts = [{
-					title: "发送给微信好友"
-				}, {
-					title: "分享到微信朋友圈"
-				}, {
-					title: "分享到新浪微博"
-				}, {
-					title: "分享到腾讯微博"
-				}, {
-					title: "分享到QQ"
-				}];
-			plus.nativeUI.actionSheet({
-				cancel: "取消",
-				buttons: bts
-			}, function(e) {
-				var i = e.index;
-				if(i > 0) {
-					var s_id = ids[i - 1].id;
-					var share = shares[s_id];
-					if(share.authenticated) {
-						shareMessage(share, ids[i - 1].ex);
-					} else {
-						share.authorize(function() {
-							shareMessage(share, ids[i - 1].ex);
-						}, function(e) {
-							console.log("认证授权失败：" + e.code + " - " + e.message);
-						});
-					}
-				}
-			});
-		});
-
-		function shareMessage(share, ex) {
-			var msg = {
-				extra: {
-					scene: ex
-				}
-			};
-			msg.href = "http://icoolpy.com";
-			msg.title = "酷痞物联v5.0";
-			msg.content = "新一代高性能跨平台的开源物联网雾计算平台；马上试试：http://icoolpy.com";
-			msg.thumbs = ["_www/images/favicon.png"];
-			share.send(msg, function() {
-				//				console.log("分享到\"" + share.description + "\"成功！ ");
-			}, function(e) {
-				//				console.log("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
-			});
-		}
+		//		//分享链接点击事件
+		//		document.getElementById("share").addEventListener('tap', function() {
+		//			var ids = [{
+		//					id: "weixin",
+		//					ex: "WXSceneSession"
+		//				}, {
+		//					id: "weixin",
+		//					ex: "WXSceneTimeline"
+		//				}, {
+		//					id: "sinaweibo"
+		//				}, {
+		//					id: "tencentweibo"
+		//				}, {
+		//					id: "qq"
+		//				}],
+		//				bts = [{
+		//					title: "发送给微信好友"
+		//				}, {
+		//					title: "分享到微信朋友圈"
+		//				}, {
+		//					title: "分享到新浪微博"
+		//				}, {
+		//					title: "分享到腾讯微博"
+		//				}, {
+		//					title: "分享到QQ"
+		//				}];
+		//			plus.nativeUI.actionSheet({
+		//				cancel: "取消",
+		//				buttons: bts
+		//			}, function(e) {
+		//				var i = e.index;
+		//				if(i > 0) {
+		//					var s_id = ids[i - 1].id;
+		//					var share = shares[s_id];
+		//					if(share.authenticated) {
+		//						shareMessage(share, ids[i - 1].ex);
+		//					} else {
+		//						share.authorize(function() {
+		//							shareMessage(share, ids[i - 1].ex);
+		//						}, function(e) {
+		//							console.log("认证授权失败：" + e.code + " - " + e.message);
+		//						});
+		//					}
+		//				}
+		//			});
+		//		});
+		//
+		//		function shareMessage(share, ex) {
+		//			var msg = {
+		//				extra: {
+		//					scene: ex
+		//				}
+		//			};
+		//			msg.href = "http://icoolpy.com";
+		//			msg.title = "酷痞物联v5.0";
+		//			msg.content = "新一代高性能跨平台的开源物联网雾计算平台；马上试试：http://icoolpy.com";
+		//			msg.thumbs = ["_www/images/favicon.png"];
+		//			share.send(msg, function() {
+		//				//				console.log("分享到\"" + share.description + "\"成功！ ");
+		//			}, function(e) {
+		//				//				console.log("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
+		//			});
+		//		}
 		//去评分
 		//		document.getElementById("rate").addEventListener('tap', function() {
 		//			if (mui.os.ios) {

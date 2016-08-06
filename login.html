@@ -154,7 +154,7 @@
 					};
 					//检查 "登录状态/锁屏状态" 开始
 					if(settings.autoLogin && localStorage.getItem('$svc') && state.token) {
-						app.relogin(state,function(err) {
+						app.relogin(state, function(err) {
 							if(err) {
 								plus.nativeUI.toast(err);
 								return;

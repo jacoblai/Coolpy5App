@@ -4,30 +4,30 @@
  * 请注意将相关方法调整成 “基于服务端Service” 的实现。
  **/
 (function($, owner) {
-	owner.relogin = function(state, callback){
-		callback = callback || $.noop;
-		$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
-			dataType: 'json',
-			type: 'get',
-			headers: {
-				'Content-Type': 'application/json',
-				"Authorization": state.token
-			},
-			success: function(data) {
-				if(data.ok == 1) {
-					return callback(undefined);
-				} else {
-					return callback('用户名或密码错误');
+	owner.relogin = function(state, callback) {
+			callback = callback || $.noop;
+			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
+				dataType: 'json',
+				type: 'get',
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": state.token
+				},
+				success: function(data) {
+					if(data.ok == 1) {
+						return callback(undefined);
+					} else {
+						return callback('用户名或密码错误');
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					return callback(Error(xhr.responseText));
 				}
-			},
-			error: function(xhr, type, errorThrown) {
-				return callback(Error(xhr.responseText));
-			}
-		});
-	}
-	/**
-	 * 用户登录
-	 **/
+			});
+		}
+		/**
+		 * 用户登录
+		 **/
 	owner.login = function(loginInfo, callback) {
 		callback = callback || $.noop;
 		regex = /^[a-zA-Z0-9_]{3,128}$/;
@@ -37,7 +37,7 @@
 		if(!regex.test(loginInfo.password)) {
 			return callback('密码验证失败');
 		}
-		var token = "Basic " + base64.encode(loginInfo.account+":"+loginInfo.password);
+		var token = "Basic " + base64.encode(loginInfo.account + ":" + loginInfo.password);
 		$.ajax(localStorage.getItem('$svc') + '/api/user/' + loginInfo.account, {
 			dataType: 'json',
 			type: 'get',

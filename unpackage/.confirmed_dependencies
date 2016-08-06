@@ -7,7 +7,8 @@
       "js/app.js",
       "js/mui.min.js",
       "css/mui.min.css",
-      "fonts/mui.ttf"
+      "fonts/mui.ttf",
+      "js/base64.js"
     ]
   },
   "login.html": {
@@ -50,7 +51,8 @@
       "images/iconfont-tianjia.png",
       "images/cbd.jpg",
       "images/favicon.png",
-      "js/base64.js"
+      "js/base64.js",
+      "images/yuantiao.jpg"
     ],
     "refer": [
       "login.html"
