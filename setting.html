@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -152,7 +152,6 @@
 				height: 0;
 			}
 			
-			
 			.mui-locker {
 				margin: 35px auto;
 				display: none;
@@ -191,10 +190,15 @@
 								<a class="mui-navigate-right" href="#account">
 									<img class="mui-media-object mui-pull-left head-img" id="head-img" src="images/user-photo.png">
 									<div class="mui-media-body">
-										Hello 酷痞
-										<p class='mui-ellipsis'>账号:hello coolpy5</p>
+										<span id="lb_username"></span>
+										<p id="lb_userid" class='mui-ellipsis'></p>
 									</div>
 								</a>
+								<div class="mui-button-row">
+									<a class="mui-btn mui-btn-primary" href="#changeuserinfo">账号设置</a>&nbsp;&nbsp;
+									<a class="mui-btn mui-btn-primary" href="#" id="bt_copyukey">查看密钥</a>&nbsp;&nbsp;
+									<a class="mui-btn mui-btn-danger" href="#changepwd">修改密码</a>
+								</div>
 							</li>
 						</ul>
 						<ul class="mui-table-view mui-table-view-chevron">
@@ -204,13 +208,18 @@
 							<li class="mui-table-view-cell">
 								<a id="share" class="mui-navigate-right">分享推荐</a>
 							</li>
+						</ul>
+						<ul class="mui-table-view mui-table-view-chevron">
 							<li class="mui-table-view-cell">
-								<a id="about-btn" href="#about" class="mui-navigate-right">关于我们</a>
+								<a href="#notifications" class="mui-navigate-right">新消息通知</a>
 							</li>
 						</ul>
 						<ul class="mui-table-view mui-table-view-chevron">
 							<li class="mui-table-view-cell">
 								<a id="feedback-btn" href="#feedback" class="mui-navigate-right">问题反馈</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="#about" class="mui-navigate-right">关于酷痞 <i class="mui-pull-right update">v5.0.1.5</i></a>
 							</li>
 						</ul>
 						<ul class="mui-table-view">
@@ -222,6 +231,69 @@
 				</div>
 			</div>
 			<!--页面主内容区结束-->
+		</div>
+
+		<div id="notifications" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">新消息通知</h1>
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a>接收新消息通知<span class="mui-pull-right">已开启</span></a>
+							</li>
+						</ul>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								通知显示消息详情
+								<div class="mui-switch mui-active mui-switch-mini">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</li>
+						</ul>
+						<div class="mui-content-padded">
+							<p>若关闭，当收到新消息时，通知提示将不显示发信人和内容摘要</p>
+						</div>
+
+						<ul class="mui-table-view mui-table-view-chevron">
+							<li class="mui-table-view-cell">
+								<a href="#notifications_disturb" class="mui-navigate-right">功能消息免打扰</a>
+							</li>
+						</ul>
+						<div class="mui-content-padded">
+							<p>设置系统功能消息提示声音和震动的时段</p>
+						</div>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a>接收新消息通知<span class="mui-pull-right">已开启</span></a>
+							</li>
+						</ul>
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								声音
+								<div class="mui-switch mui-active mui-switch-mini">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</li>
+							<li class="mui-table-view-cell">
+								震动
+								<div class="mui-switch mui-active mui-switch-mini">
+									<div class="mui-switch-handle"></div>
+								</div>
+							</li>
+						</ul>
+						<div class="mui-content-padded">
+							<p>当Coolpy5App在运行时，你可以设置是否需要声音或者震动</p>
+						</div>
+						<div></div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="notifications_disturb" class="mui-page">
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
@@ -258,22 +330,80 @@
 			</div>
 			<div class="mui-content">
 				<div class="mui-card">
-				<div class="mui-card-header mui-card-media">
-					<img src="images/favicon.png" width="64px" />
-					<div class="mui-media-body">
-						酷痞物联
-						<p>icoolpy.com</p>
+					<div class="mui-card-header mui-card-media">
+						<img src="images/favicon.png" width="64px" />
+						<div class="mui-media-body">
+							酷痞物联
+						</div>
+					</div>
+					<div class="mui-card-content">
+						<img src="images/cbd.jpg" alt="" width="100%" />
+					</div>
+					<div class="mui-card-footer">
+						<a class="mui-card-link">ICOOLPY.COM</a>
 					</div>
 				</div>
-				<div class="mui-card-content" >
-					<img src="images/cbd.jpg" alt="" width="100%"/>
-				</div>
-				<div class="mui-card-footer">
-					<a class="mui-card-link">Like</a>
-					<a class="mui-card-link">Comment</a>
-					<a class="mui-card-link">Read more</a>
-				</div>
 			</div>
+		</div>
+
+		<div id="changeuserinfo" class="mui-page feedback">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">账号设置</h1>
+			</div>
+			<div class="mui-page-content">
+				<form class="mui-input-group">
+					<br>
+					<div class="mui-input-row">
+						<label>用户名</label>
+						<input type="text" class="mui-input-clear" id="tb_username">
+					</div>
+					<br>
+					<div class="mui-input-row">
+						<label>电子邮箱</label>
+						<input type="email" class="mui-input-clear" id="tb_mail">
+					</div>
+					<br>
+					<div class="mui-button-row">
+						<a id="bt_changeuserinfo" class="mui-btn mui-btn-primary" href="#">确认</a>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div id="changepwd" class="mui-page feedback">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>设置
+				</button>
+				<h1 class="mui-center mui-title">修改密码</h1>
+			</div>
+			<div class="mui-page-content">
+				<form class="mui-input-group">
+					<br>
+					<br>
+					<div class="mui-input-row">
+						<label>旧密码</label>
+						<input type="password" class="mui-input-password" id="opwd">
+					</div>
+					<br>
+					<br>
+					<div class="mui-input-row">
+						<label>新密码</label>
+						<input type="password" class="mui-input-password" id="npwd1">
+					</div>
+
+					<div class="mui-input-row mui-plus-visible">
+						<label>重复新密码</label>
+						<input type="password" class="mui-input-password" id="npwd2">
+					</div>
+					<br>
+					<div class="mui-button-row">
+						<a id="bt_changepwd" class="mui-btn mui-btn-primary" href="#">确认</a>
+					</div>
+				</form>
 			</div>
 		</div>
 
@@ -298,20 +428,20 @@
 				</div>
 				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
 			</div>
-			<p>此示例基于环信 “WebIM SDK” + 环信 “移动客服” 实现，在环信 “移动客服面板” 能够查阅反馈信息。</p>
 		</div>
 
 	</body>
-	<script src="./js/mui.min.js "></script>
-	<script src="./js/mui.view.js "></script>
-	<script src='./libs/easymob-webim-sdk/jquery-1.11.1.js'></script>
-	<script src='./libs/easymob-webim-sdk/strophe-custom-2.0.0.js'></script>
-	<script src='./libs/easymob-webim-sdk/json2.js'></script>
-	<script src="./libs/easymob-webim-sdk/easemob.im-1.0.5.js"></script>
-	<script src='./js/feedback.js'></script>
-	<script src="./js/feedback-page.js"></script>
-	<script src="./js/mui.locker.js"></script>
-	<script src="./js/app.js"></script>
+	<script src="js/mui.min.js "></script>
+	<script src="js/mui.view.js "></script>
+	<script src='libs/easymob-webim-sdk/jquery-1.11.1.js'></script>
+	<script src='libs/easymob-webim-sdk/strophe-custom-2.0.0.js'></script>
+	<script src='libs/easymob-webim-sdk/json2.js'></script>
+	<script src="libs/easymob-webim-sdk/easemob.im-1.0.5.js"></script>
+	<script src='js/feedback.js'></script>
+	<script src="js/feedback-page.js"></script>
+	<script src="js/mui.locker.js"></script>
+	<script src="js/base64.js"></script>
+	<script src="js/app.js"></script>
 	<script>
 		mui.init();
 		//初始化单页view
@@ -334,6 +464,112 @@
 				console.log("获取分享服务列表失败");
 			});
 		});
+
+		window.addEventListener('userInfoRefresh', function(event) {
+			var state = app.getState();
+			document.getElementById('lb_username').innerText = state.UserName;
+			document.getElementById('lb_userid').innerText = '账号：' + state.Uid;
+			document.getElementById('tb_username').value = state.UserName;
+			document.getElementById('tb_mail').value = state.Email;
+		});
+
+		//复制用户密钥
+		document.getElementById('bt_copyukey').addEventListener('tap', function() {
+			var state = app.getState();
+			if(mui.os.ios) {
+				var UIPasteboard = plus.ios.importClass("UIPasteboard");
+				var generalPasteboard = UIPasteboard.generalPasteboard();
+				generalPasteboard.setValueforPasteboardType(state.Ukey, "public.utf8-plain-text");
+				plus.nativeUI.toast('用户密钥：U-ApiKey已复制到当前粘贴板');
+			} else if(mui.os.android) {
+				var Context = plus.android.importClass("android.content.Context");
+				var main = plus.android.runtimeMainActivity();
+				var clip = main.getSystemService(Context.CLIPBOARD_SERVICE);
+				plus.android.invoke(clip, "setText", state.Ukey);
+				plus.nativeUI.toast('用户密钥：U-ApiKey已复制到当前粘贴板');
+			} else {
+				plus.nativeUI.toast('当前系统不支持设置系统粘贴板');
+			}
+		});
+
+		//修改用户资料
+		document.getElementById("bt_changeuserinfo").addEventListener('tap', function() {
+			var tb_username = document.getElementById("tb_username");
+			var tb_mail = document.getElementById("tb_mail");
+			if(tb_username.value == "" || tb_mail.value == "") {
+				plus.nativeUI.toast('内容不符合规范');
+				return;
+			}
+			var state = app.getState();
+			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
+				dataType: 'json',
+				type: 'put',
+				data: JSON.stringify({
+					Uid: state.Uid,
+					Pwd: state.Pwd,
+					UserName: tb_username.value,
+					Email: tb_mail.value
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": state.token
+				},
+				success: function(data) {
+					if(data.ok == 1) {
+						data.data.token = "Basic " + base64.encode(data.data.Uid + ":" + data.data.Pwd);
+						app.setState(data.data)
+						mui.back();
+					} else {
+						plus.nativeUI.toast(Error(data.err));
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					plus.nativeUI.toast(Error(xhr.responseText));
+				}
+			});
+		});
+
+		//修改密码事件
+		document.getElementById("bt_changepwd").addEventListener('tap', function() {
+			var opwd = document.getElementById('opwd');
+			var npwd1 = document.getElementById("npwd1");
+			var npwd2 = document.getElementById("npwd2");
+			regex = /^[a-zA-Z0-9_]{3,128}$/;
+			if(!regex.test(opwd.value) || !regex.test(npwd1.value) || !regex.test(npwd2.value)) {
+				plus.nativeUI.toast('密码不符合规范');
+				return;
+			}
+			if(npwd1.value != npwd2.value) {
+				plus.nativeUI.toast('重复密码与新密码不一至');
+				return;
+			}
+			var state = app.getState();
+			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
+				dataType: 'json',
+				type: 'put',
+				data: JSON.stringify({
+					Uid: state.Uid,
+					Pwd: npwd1.value
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					"Authorization": state.token
+				},
+				success: function(data) {
+					if(data.ok == 1) {
+						data.data.token = "Basic " + base64.encode(data.data.Uid + ":" + data.data.Pwd);
+						app.setState(data.data)
+						mui.back();
+					} else {
+						plus.nativeUI.toast(Error('用户名或密码错误'));
+					}
+				},
+				error: function(xhr, type, errorThrown) {
+					plus.nativeUI.toast(Error(xhr.responseText));
+				}
+			});
+		});
+
 		//分享链接点击事件
 		document.getElementById("share").addEventListener('tap', function() {
 			var ids = [{
@@ -389,15 +625,12 @@
 			};
 			msg.href = "http://icoolpy.com";
 			msg.title = "酷痞物联v5.0";
-			msg.content = "新一代高性能跨平台的开源物联网雾计算平台";
-			if(~share.id.indexOf('weibo')) {
-				msg.content += "；马上试试：http://icoolpy.com";
-			}
+			msg.content = "新一代高性能跨平台的开源物联网雾计算平台；马上试试：http://icoolpy.com";
 			msg.thumbs = ["_www/images/favicon.png"];
 			share.send(msg, function() {
-				console.log("分享到\"" + share.description + "\"成功！ ");
+				//				console.log("分享到\"" + share.description + "\"成功！ ");
 			}, function(e) {
-				console.log("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
+				//				console.log("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
 			});
 		}
 		//去评分

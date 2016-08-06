@@ -4,10 +4,10 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "mui_template_login",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "mui登录模板",/*应用名称，程序桌面图标名称*/
+	"id": "H54BCB4AD",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"name": "Coolpy5App",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "5.0.1.5",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -16,9 +16,9 @@
 	},
 	"launch_path": "login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
-		"name": "",/*开发者名称*/
-		"email": "",/*开发者邮箱地址*/
-		"url": "http://www.dcloud.io"
+		"name": "黎东海",/*开发者名称*/
+		"email": "229292620@qq.com",/*开发者邮箱地址*/
+		"url": "http://icoolpy.com"
 	},
 	"permissions": {
 		"Accelerometer": {
@@ -82,7 +82,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"Share":{},"OAuth":{},"Device":{}
+		"NativeObj": {},"Share":{},"Device":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -197,7 +197,8 @@
 					"images/iconfont-tianjia.png",
 					"images/user-photo.png",
 					"images/cbd.jpg",
-					"images/favicon.png"
+					"images/favicon.png",
+					"js/base64.js"
 				],
 				"refer": [
 					"login.html"

@@ -21,7 +21,7 @@
 				}
 			},
 			error: function(xhr, type, errorThrown) {
-				return callback('网络连接出错');
+				return callback(Error(xhr.responseText));
 			}
 		});
 	}
@@ -47,6 +47,7 @@
 			},
 			success: function(data) {
 				if(data.ok == 1) {
+					data.data.Pwd = loginInfo.password;
 					data.data.token = token;
 					owner.setState(data.data)
 					return callback();
@@ -55,7 +56,7 @@
 				}
 			},
 			error: function(xhr, type, errorThrown) {
-				return callback(Error('网络连接出错'));
+				return callback(Error(xhr.responseText));
 			}
 		});
 	};
