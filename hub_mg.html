@@ -13,18 +13,53 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div class="mui-content" id="ViewModel" data-bind="foreach: { data: hubs, as: 'hub' }">
+			<!-- ko -->
 			<div class="mui-card">
-				<div class="mui-card-header">页眉</div>
+				<div class="mui-card-header" data-bind="text:hub.Title"></div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						包含页眉页脚的卡片，页眉常用来显示面板标题，页脚用来显示额外信息或支持的操作（比如点赞、评论等）
 					</div>
 				</div>
 				<div class="mui-card-footer">页脚</div>
-			</div>					
+			</div>
+			<!-- /ko -->
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/knockout-3.3.0.js"></script>
+		<script type="text/javascript">
+			function vm() {
+				var self = this;
+				self.hubs = ko.observableArray();
+				self.load = function() {
+					var state = app.getState();
+					mui.ajax(localStorage.getItem('$svc') + '/api/hubs', {
+						dataType: 'json',
+						type: 'get',
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": state.token
+						},
+						success: function(data) {
+							if(data.ok == 1) {
+								self.hubs.removeAll()
+								self.hubs(data.data)
+							} else {
+								plus.nativeUI.toast(data.err);
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							plus.nativeUI.toast(Error(xhr.responseText));
+						}
+					});
+				}
+			}
+			var dvvm = new vm();
+			ko.applyBindings(dvvm, document.getElementById("ViewModel"));
+			dvvm.load();
+		</script>
 	</body>
 
 </html>

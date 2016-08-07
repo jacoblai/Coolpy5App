@@ -329,7 +329,9 @@
 					"css/mui.min.css",
 					"images/yuantiao.jpg",
 					"images/favicon.png",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"js/app.js",
+					"js/knockout-3.3.0.js"
 				],
 				"refer": [],
 				"priority": 0
