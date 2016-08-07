@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>hub_add</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+		<style>
+			h5 {
+				margin: 5px 7px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>枢纽名称</label>
+						<input type="text" class="mui-input-clear" id="tb_hubtitle">
+					</div>
+					<div class="mui-input-row">
+						<label>枢纽标签</label>
+						<input type="text" class="mui-input-clear" id="tb_hubabout">
+					</div>
+
+					<div class="mui-input-row mui-plus-visible">
+						<label>枢纽描述</label>
+						<input type="text" class="mui-input-clear" id="tb_hubtabs">
+					</div>
+					<br>
+					<div class="mui-input-row mui-search mui-plus-visible">
+						<label>枢纽位置</label>
+						<input type="text" class="mui-input-clear" id="tb_address" disabled>
+					</div>
+					<div class="mui-input-row mui-plus-visible">
+						<label>纬度</label>
+						<input type="text" class="mui-input-clear" id="tb_latitude" disabled>
+					</div>
+					<div class="mui-input-row mui-plus-visible">
+						<label>经度</label>
+						<input type="text" class="mui-input-clear" id="tb_longitude" disabled>
+					</div>
+					<div class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-green" onclick="return false;" id="bt_getgeo">设置位置信息</button>
+					</div>
+					<br>
+					<div class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" id="bt_addhub">确认</button>&nbsp;&nbsp;
+						<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" id="bt_cancel">取消</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			document.getElementById('bt_addhub').addEventListener('tap', function() {
+				var obj = Object();
+				obj.Title = document.getElementById('tb_hubtitle').value;
+				obj.About = document.getElementById('tb_hubabout').value;
+				obj.Tabs = document.getElementById('tb_hubtabs').value.split(",");
+				obj.Local = document.getElementById('tb_address').value;
+				obj.Latitude = parseFloat(document.getElementById('tb_latitude').value, 10);
+				obj.Longitude = parseFloat(document.getElementById('tb_longitude').value, 10);
+				if(obj.Title.length == 0 || obj.Title.length > 64 ||
+					obj.About.length == 0 || obj.About.length > 64 ||
+					document.getElementById('tb_hubtabs').value.length == 0 || document.getElementById('tb_hubtabs').value.length > 64 ||
+					obj.Local.length == 0 || obj.Local > 64) {
+					plus.nativeUI.toast('数据不符合规范');
+					return;
+				}
+				var state = app.getState();
+				mui.ajax(localStorage.getItem('$svc') + '/api/hubs', {
+					dataType: 'json',
+					type: 'post',
+					data: JSON.stringify(obj),
+					headers: {
+						'Content-Type': 'application/json',
+						"Authorization": state.token
+					},
+					success: function(data) {
+						if(data.ok == 1) {
+							plus.nativeUI.toast('提交成功');
+							document.getElementById('tb_hubtitle').value = "";
+							document.getElementById('tb_hubabout').value = "";
+							document.getElementById('tb_hubtabs').value = "";
+							document.getElementById('tb_address').value = "";
+							document.getElementById('tb_latitude').value = "";
+							document.getElementById('tb_longitude').value = "";
+						} else {
+							plus.nativeUI.toast(data.err);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.toast(Error(xhr.responseText));
+					}
+				});
+			})
+			document.getElementById('bt_cancel').addEventListener("tap", function() {
+				document.getElementById('tb_hubtitle').value = "";
+				document.getElementById('tb_hubabout').value = "";
+				document.getElementById('tb_hubtabs').value = "";
+				document.getElementById('tb_address').value = "";
+				document.getElementById('tb_latitude').value = "";
+				document.getElementById('tb_longitude').value = "";
+				mui.back()
+			})
+
+			function geoInf(position) {
+				document.getElementById('tb_address').value = position.addresses;
+				document.getElementById('tb_latitude').value = position.coords.latitude;
+				document.getElementById('tb_longitude').value = position.coords.longitude;
+			}
+			// 通过定位模块获取位置信息
+			function getGeocode() {
+				plus.geolocation.getCurrentPosition(geoInf, function(e) {
+					plus.nativeUI.toast("获取定位位置信息失败：" + e.message);
+				}, {
+					geocode: true,
+					provider: 'amap'
+				});
+			}
+			document.getElementById('bt_getgeo').addEventListener('tap', function() {
+				getGeocode()
+			})
+		</script>
+	</body>
+
+</html>

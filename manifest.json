@@ -4,8 +4,8 @@
 		"iPhone",
 		"iPad"
 	],
-	"id": "H54BCB4AD",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "Coolpy5App",/*应用名称，程序桌面图标名称*/
+	"id": "Coolpy5App",/*应用的标识，创建应用时自动生成，勿手动修改*/
+	"name": "酷痞物联",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "5.0.1.0",/*应用版本名称*/
 		"code": "83"
@@ -82,7 +82,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"Device":{}
+		"NativeObj": {},"Device":{},"Maps":{},"Geolocation":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -91,7 +91,7 @@
 		},
 		"runmode": "liberate",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-		"distribute": {
+		"distribute": {"plugins":{"maps":{"baidu":{"appkey_ios":"OCG1bZGcZKXmV4viGPVTGzSGZeZ0k9Tl","appkey_android":"sQbyCvsGbGnGkr13HYYBMlnGGp6CKaP3","appkey":"","description":""}}},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
 				"mobileprovision": "",/*iOS应用打包配置文件*/
@@ -105,7 +105,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"]
+				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -213,7 +213,8 @@
 					"fonts/mui.ttf",
 					"js/mui.min.js",
 					"js/app.js",
-					"js/base64.js"
+					"js/base64.js",
+					"hub_add.html"
 				],
 				"refer": [
 					"setting.html"
@@ -306,6 +307,17 @@
 					"images/favicon.png",
 					"js/mui.min.js",
 					"css/style.css",
+					"js/app.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"hub_add.html": {
+				"resources": [
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"css/common.css",
 					"js/app.js"
 				],
 				"refer": [],

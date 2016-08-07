@@ -25,43 +25,52 @@
 			<button id='setting' class=" mui-pull-right mui-btn-link">设置</button>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="tab-webview-subpage-about.html">
-				<span class="mui-icon mui-icon-home"></span>
+			<a id="defaultTab" class="mui-tab-item mui-active" href="hub_add.html">
+				<span class="mui-icon mui-icon-upload"></span>
 				<span class="mui-tab-label">控制器</span>
 			</a>
 			<a class="mui-tab-item" href="tab-webview-subpage-chat.html">
-				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
+				<span class="mui-icon mui-icon-download"></span>
 				<span class="mui-tab-label">传感器</span>
 			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
-				<span class="mui-icon mui-icon-contact"></span>
-				<span class="mui-tab-label">我的设备</span>
+			<a class="mui-tab-item" href="hub_add.html">
+				<span class="mui-icon mui-icon-flag"></span>
+				<span class="mui-tab-label">添加枢纽</span>
 			</a>
 			<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
-				<span class="mui-icon mui-icon-gear"></span>
-				<span class="mui-tab-label">账号管理</span>
+				<span class="mui-icon mui-icon-paperplane"></span>
+				<span class="mui-tab-label">管理枢纽</span>
 			</a>
 		</nav>
-		<div class="mui-content">
-			<div class="mui-content-padded">
-				<p>
-					您好 <span id='account'></span>，您已成功登录。
-					<ul>
-						<li>这是mui带登录和设置模板的示例App首页。</li>
-						<li>您可以点击右上角的 “设置” 按钮，进入设置模板，体验div窗体切换示例。</li>
-						<li>在 “设置” 中点击 “退出” 可以 “注销当前账户” 或 “直接关闭应用”。</li>
-						<li>你可以设置 “锁屏图案”，这样可通过手势密码代替输入账号、密码；</li>
-					</ul>
-				</p>
-
-			</div>
-		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
+
+				var subpages = ['hub_add.html'];
+				var subpage_style = {
+					top: '45px',
+					bottom: '51px'
+				};
+
+				var aniShow = {};
+
 				$.plusReady(function() {
+					//创建子页面，首个选项卡页面显示，其它均隐藏；
+					var self = plus.webview.currentWebview();
+					for(var i = 0; i < 4; i++) {
+						var temp = {};
+						var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+						if(i > 0) {
+							sub.hide();
+						} else {
+							temp[subpages[i]] = "true";
+							mui.extend(aniShow, temp);
+						}
+						self.append(sub);
+					}
+
 					var settingPage = $.preload({
 						"id": 'setting',
 						"url": 'setting.html'
@@ -103,6 +112,46 @@
 						return false;
 					};
 				});
+				
+				//当前激活选项
+			var activeTab = subpages[0];
+			var title = document.getElementById("title");
+			 //选项卡点击事件
+			mui('.mui-bar-tab').on('tap', 'a', function(e) {
+				var targetTab = this.getAttribute('href');
+				if (targetTab == activeTab) {
+					return;
+				}
+				//更换标题
+				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+				//显示目标选项卡
+				//若为iOS平台或非首次显示，则直接显示
+				if(mui.os.ios||aniShow[targetTab]){
+					plus.webview.show(targetTab);
+				}else{
+					//否则，使用fade-in动画，且保存变量
+					var temp = {};
+					temp[targetTab] = "true";
+					mui.extend(aniShow,temp);
+					plus.webview.show(targetTab,"fade-in",300);
+				}
+				//隐藏当前;
+				plus.webview.hide(activeTab);
+				//更改当前活跃的选项卡
+				activeTab = targetTab;
+			});
+			 //自定义事件，模拟点击“首页选项卡”
+			document.addEventListener('gohome', function() {
+				var defaultTab = document.getElementById("defaultTab");
+				//模拟首页点击
+				mui.trigger(defaultTab, 'tap');
+				//切换选项卡高亮
+				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+				if (defaultTab !== current) {
+					current.classList.remove('mui-active');
+					defaultTab.classList.add('mui-active');
+				}
+			});
 			}(mui, document));
 		</script>
 	</body>
