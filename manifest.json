@@ -217,7 +217,8 @@
 					"hub_add.html"
 				],
 				"refer": [
-					"setting.html"
+					"setting.html",
+					"hub_mg.html"
 				],
 				"priority": 1
 			},
@@ -319,6 +320,16 @@
 					"css/mui.min.css",
 					"css/common.css",
 					"js/app.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"hub_mg.html": {
+				"resources": [
+					"css/mui.min.css",
+					"images/yuantiao.jpg",
+					"images/favicon.png",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0

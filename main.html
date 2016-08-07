@@ -37,7 +37,7 @@
 				<span class="mui-icon mui-icon-flag"></span>
 				<span class="mui-tab-label">添加枢纽</span>
 			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
+			<a class="mui-tab-item" href="hub_mg.html">
 				<span class="mui-icon mui-icon-paperplane"></span>
 				<span class="mui-tab-label">管理枢纽</span>
 			</a>
@@ -48,7 +48,7 @@
 			(function($, doc) {
 				$.init();
 
-				var subpages = ['hub_add.html'];
+				var subpages = ['hub_add.html','hub_mg.html'];
 				var subpage_style = {
 					top: '45px',
 					bottom: '51px'
@@ -122,8 +122,6 @@
 				if (targetTab == activeTab) {
 					return;
 				}
-				//更换标题
-				title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 				//显示目标选项卡
 				//若为iOS平台或非首次显示，则直接显示
 				if(mui.os.ios||aniShow[targetTab]){

@@ -372,6 +372,11 @@
 					<div class="mui-button-row">
 						<a id="bt_changeuserinfo" class="mui-btn mui-btn-primary" href="#">确认</a>
 					</div>
+					<br>
+					<br>
+					<div class="mui-button-row">
+						<a id="bt_resetukey" class="mui-btn mui-btn-danger" href="#">重置用户密钥 U-ApiKey</a>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -489,6 +494,39 @@
 			document.getElementById('tb_mail').value = state.Email;
 		});
 
+		//重置密钥
+		document.getElementById('bt_resetukey').addEventListener('tap', function() {
+			var btnArray = ['否', '是'];
+			mui.confirm('高危此操作！此操作会把所有枢纽、节点、数据结点全部删除，确认？', '酷痞物联', btnArray, function(e) {
+				if(e.index == 1) {
+	                var w=plus.nativeUI.showWaiting("处理中，请等待...");
+					var state = app.getState();
+					$.ajax(localStorage.getItem('$svc') + '/api/um/newkey', {
+						dataType: 'json',
+						type: 'get',
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": state.token
+						},
+						success: function(data) {
+							w.close()
+							if(data.ok == 1) {
+								state.Ukey = data.data;
+								app.setState(state);
+								mui.back();
+							} else {
+								plus.nativeUI.toast(Error(data.err));
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							w.close()
+							plus.nativeUI.toast(Error(xhr.responseText));
+						}
+					});
+				}
+			})
+		})
+
 		//复制用户密钥
 		document.getElementById('bt_copyukey').addEventListener('tap', function() {
 			var state = app.getState();
@@ -516,6 +554,7 @@
 				plus.nativeUI.toast('内容不符合规范');
 				return;
 			}
+			var w=plus.nativeUI.showWaiting("处理中，请等待...");
 			var state = app.getState();
 			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
 				dataType: 'json',
@@ -531,6 +570,7 @@
 					"Authorization": state.token
 				},
 				success: function(data) {
+					w.close()
 					if(data.ok == 1) {
 						data.data.token = "Basic " + base64.encode(data.data.Uid + ":" + data.data.Pwd);
 						app.setState(data.data)
@@ -540,6 +580,7 @@
 					}
 				},
 				error: function(xhr, type, errorThrown) {
+					w.close()
 					plus.nativeUI.toast(Error(xhr.responseText));
 				}
 			});
@@ -559,6 +600,7 @@
 				plus.nativeUI.toast('重复密码与新密码不一至');
 				return;
 			}
+			var w=plus.nativeUI.showWaiting("处理中，请等待...");
 			var state = app.getState();
 			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
 				dataType: 'json',
@@ -572,6 +614,7 @@
 					"Authorization": state.token
 				},
 				success: function(data) {
+					w.close()
 					if(data.ok == 1) {
 						data.data.token = "Basic " + base64.encode(data.data.Uid + ":" + data.data.Pwd);
 						app.setState(data.data)
@@ -581,6 +624,7 @@
 					}
 				},
 				error: function(xhr, type, errorThrown) {
+					w.close()
 					plus.nativeUI.toast(Error(xhr.responseText));
 				}
 			});

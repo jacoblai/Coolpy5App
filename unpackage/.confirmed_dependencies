@@ -2,7 +2,8 @@
 	"main.html": {
 		"refer": [
 			"setting.html",
-			"hub_add.html"
+			"hub_add.html",
+			"hub_mg.html"
 		],
 		"resources": [
 			"js/app.js",
@@ -99,6 +100,14 @@
 			"css/mui.min.css",
 			"css/common.css",
 			"js/app.js"
+		]
+	},
+	"hub_mg.html": {
+		"resources": [
+			"css/mui.min.css",
+			"images/yuantiao.jpg",
+			"images/favicon.png",
+			"js/mui.min.js"
 		]
 	}
 }
