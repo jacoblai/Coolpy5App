@@ -4,7 +4,8 @@
 			"setting.html",
 			"hub_add.html",
 			"hub_mg.html",
-			"hub_edit.html"
+			"hub_edit.html",
+			"node_add.html"
 		],
 		"resources": [
 			"js/app.js",
@@ -125,6 +126,18 @@
 			"css/common.css",
 			"css/mui.min.css",
 			"fonts/mui.ttf"
+		]
+	},
+	"node_add.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"css/common.css",
+			"css/mui.min.css",
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css"
 		]
 	}
 }

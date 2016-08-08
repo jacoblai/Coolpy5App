@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>hub_mg</title>
+		<title>node_mg</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -55,85 +55,7 @@
 		<script src="js/app.js"></script>
 		<script src="js/knockout-3.3.0.js"></script>
 		<script type="text/javascript">
-			mui.init();
-			mui.plusReady(function() {
-				window.addEventListener('reload', function(event) {
-					dvvm.load();
-				});
-
-				function vm() {
-					var self = this;
-
-					self.nodeadd = function(obj) {
-						var nodeadd = plus.webview.getWebviewById('node_add.html');
-						mui.fire(nodeadd, 'sethubid', {
-							'hub': JSON.stringify(obj)
-						})
-						plus.webview.show(nodeadd, "fade-in", 300);
-					}
-
-					self.hubdel = function(obj) {
-						var btnArray = ['否', '是'];
-						mui.confirm('高危操作！此操作会把选中枢纽相关的节点、数据结点全部删除，确认？', '酷痞物联', btnArray, function(e) {
-							if(e.index == 1) {
-								var state = app.getState();
-								mui.ajax(localStorage.getItem('$svc') + '/api/hub/' + obj.Id, {
-									dataType: 'json',
-									type: 'delete',
-									headers: {
-										'Content-Type': 'application/json',
-										"Authorization": state.token
-									},
-									success: function(data) {
-										if(data.ok == 1) {
-											self.load();
-										} else {
-											plus.nativeUI.toast(data.err);
-										}
-									},
-									error: function(xhr, type, errorThrown) {
-										plus.nativeUI.toast(Error(xhr.responseText));
-									}
-								});
-							}
-						})
-					}
-
-					self.hubedit = function(obj) {
-						var hubedit = plus.webview.getWebviewById('hub_edit.html');
-						mui.fire(hubedit, 'sethubid', {
-							'hub': JSON.stringify(obj)
-						})
-						plus.webview.show(hubedit, "fade-in", 300);
-					}
-
-					self.hubs = ko.observableArray();
-					self.load = function() {
-						var state = app.getState();
-						mui.ajax(localStorage.getItem('$svc') + '/api/hubs', {
-							dataType: 'json',
-							type: 'get',
-							headers: {
-								'Content-Type': 'application/json',
-								"Authorization": state.token
-							},
-							success: function(data) {
-								if(data.ok == 1) {
-									self.hubs.removeAll()
-									self.hubs(data.data)
-								} else {
-									plus.nativeUI.toast(data.err);
-								}
-							},
-							error: function(xhr, type, errorThrown) {
-								plus.nativeUI.toast(Error(xhr.responseText));
-							}
-						});
-					}
-				}
-				var dvvm = new vm();
-				ko.applyBindings(dvvm, document.getElementById("ViewModel"));
-			})
+		
 		</script>
 	</body>
 
