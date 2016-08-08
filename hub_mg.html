@@ -38,14 +38,14 @@
 						</ul>
 						<div class="mui-button-row">
 							<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" data-bind="click: $root.hubedit">修改</button>&nbsp;&nbsp;
-							<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" id="bt_hubdelete">删除</button>
+							<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" data-bind="click: $root.hubdel">删除</button>
 						</div>
 					</div>
 				</div>
 				<div class="mui-card-footer">
 					<div class="mui-button-row">
-						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" id="bt_hubedit">添加节点</button>&nbsp;&nbsp;
-						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" id="bt_hubdelete">节点管理</button>
+						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" id="bt_nodeadd">添加节点</button>&nbsp;&nbsp;
+						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" id="bt_nodedelete">节点管理</button>
 					</div>
 				</div>
 			</div>
@@ -63,6 +63,34 @@
 
 				function vm() {
 					var self = this;
+
+					self.hubdel = function(obj) {
+						var btnArray = ['否', '是'];
+						mui.confirm('高危操作！此操作会把所有选中枢纽相关的节点、数据结点全部删除，确认？', '酷痞物联', btnArray, function(e) {
+							if(e.index == 1) {
+								var state = app.getState();
+								mui.ajax(localStorage.getItem('$svc') + '/api/hub/' + obj.Id, {
+									dataType: 'json',
+									type: 'delete',
+									headers: {
+										'Content-Type': 'application/json',
+										"Authorization": state.token
+									},
+									success: function(data) {
+										if(data.ok == 1) {
+											self.load();
+										} else {
+											plus.nativeUI.toast(data.err);
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										plus.nativeUI.toast(Error(xhr.responseText));
+									}
+								});
+							}
+						})
+					}
+
 					self.hubedit = function(obj) {
 						//获得主页面的webview
 						var hubedit = plus.webview.getWebviewById('hub_edit.html');
@@ -98,7 +126,6 @@
 				}
 				var dvvm = new vm();
 				ko.applyBindings(dvvm, document.getElementById("ViewModel"));
-//				dvvm.load();
 			})
 		</script>
 	</body>

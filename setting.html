@@ -497,7 +497,7 @@
 		//重置密钥
 		document.getElementById('bt_resetukey').addEventListener('tap', function() {
 			var btnArray = ['否', '是'];
-			mui.confirm('高危此操作！此操作会把所有枢纽、节点、数据结点全部删除，确认？', '酷痞物联', btnArray, function(e) {
+			mui.confirm('高危操作！此操作会把所有枢纽、节点、数据结点全部删除，确认？', '酷痞物联', btnArray, function(e) {
 				if(e.index == 1) {
 	                var w=plus.nativeUI.showWaiting("处理中，请等待...");
 					var state = app.getState();
