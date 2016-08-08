@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>hub_add</title>
+		<title>hub_edit</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -20,7 +20,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title" id="lb_hubinfotitle">添加枢纽(Hub)</h1>
+			<h1 class="mui-title">修改枢纽(Hub)</h1>
 		</header>
 		<div class="mui-content">
 			<div class="mui-content-padded" style="margin: 5px;">
@@ -56,8 +56,8 @@
 					</div>
 					<br>
 					<div class="mui-button-row">
-						<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" id="bt_addhub">确认</button>&nbsp;&nbsp;
-						<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" id="bt_cancel">取消</button>
+						<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" id="bt_hub_edit">确认</button>&nbsp;&nbsp;
+						<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" id="bt_hub_edit_cancel">取消</button>
 					</div>
 				</form>
 			</div>
@@ -68,8 +68,18 @@
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
 			});
-
-			document.getElementById('bt_addhub').addEventListener('tap', function() {
+			var hubid;
+			window.addEventListener('sethubid', function(event) {
+				var obj = JSON.parse(event.detail.hub);
+				hubid = obj.Id;
+				document.getElementById('tb_hubtitle').value = obj.Title;
+				document.getElementById('tb_hubabout').value = obj.About;
+				document.getElementById('tb_hubtags').value = obj.Tags;
+				document.getElementById('tb_address').value = obj.Local;
+				document.getElementById('tb_latitude').value = obj.Latitude;
+				document.getElementById('tb_longitude').value = obj.Longitude;
+			});
+			document.getElementById('bt_hub_edit').addEventListener('tap', function() {
 				var obj = Object();
 				obj.Title = document.getElementById('tb_hubtitle').value;
 				obj.About = document.getElementById('tb_hubabout').value;
@@ -85,9 +95,9 @@
 					return;
 				}
 				var state = app.getState();
-				mui.ajax(localStorage.getItem('$svc') + '/api/hubs', {
+				mui.ajax(localStorage.getItem('$svc') + '/api/hub/' + hubid, {
 					dataType: 'json',
-					type: 'post',
+					type: 'put',
 					data: JSON.stringify(obj),
 					headers: {
 						'Content-Type': 'application/json',
@@ -96,12 +106,9 @@
 					success: function(data) {
 						if(data.ok == 1) {
 							plus.nativeUI.toast('提交成功');
-							document.getElementById('tb_hubtitle').value = "";
-							document.getElementById('tb_hubabout').value = "";
-							document.getElementById('tb_hubtags').value = "";
-							document.getElementById('tb_address').value = "";
-							document.getElementById('tb_latitude').value = "";
-							document.getElementById('tb_longitude').value = "";
+							var mg = plus.webview.getWebviewById('hub_mg.html');
+							mui.fire(mg, 'reload')
+							plus.webview.show(mg, "fade-in", 300);
 						} else {
 							plus.nativeUI.toast(data.err);
 						}
@@ -111,14 +118,9 @@
 					}
 				});
 			})
-			document.getElementById('bt_cancel').addEventListener("tap", function() {
-				document.getElementById('tb_hubtitle').value = "";
-				document.getElementById('tb_hubabout').value = "";
-				document.getElementById('tb_hubtags').value = "";
-				document.getElementById('tb_address').value = "";
-				document.getElementById('tb_latitude').value = "";
-				document.getElementById('tb_longitude').value = "";
-				mui.back()
+			document.getElementById('bt_hub_edit_cancel').addEventListener("tap", function() {
+				var goback = plus.webview.getWebviewById('hub_mg.html');
+				plus.webview.show(goback, "fade-in", 300);
 			})
 
 			function geoInf(position) {

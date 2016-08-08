@@ -6,7 +6,6 @@
 (function($, owner) {
 	owner.relogin = function(state, callback) {
 			callback = callback || $.noop;
-			var w=plus.nativeUI.showWaiting("处理中，请等待...");
 			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
 				dataType: 'json',
 				type: 'get',
@@ -15,7 +14,6 @@
 					"Authorization": state.token
 				},
 				success: function(data) {
-					w.close();
 					if(data.ok == 1) {
 						return callback(undefined);
 					} else {
@@ -23,7 +21,6 @@
 					}
 				},
 				error: function(xhr, type, errorThrown) {
-					w.close();
 					return callback(Error(xhr.responseText));
 				}
 			});
