@@ -13,40 +13,64 @@
 	</head>
 
 	<body>
-		<div class="mui-content" id="ViewModel" data-bind="foreach: { data: hubs, as: 'hub' }">
+		<div class="mui-content" id="ViewModel" data-bind="foreach: { data: nodes, as: 'node' }">
 			<!-- ko -->
 			<div class="mui-card">
-				<div class="mui-card-header" data-bind="text:hub.Title"></div>
+				<div class="mui-card-header" data-bind="text:node.Title"></div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
-								<a>标签<span class="mui-pull-right" data-bind="text:hub.Tags"></span></a>
+								<a>标签<span class="mui-pull-right" data-bind="text:node.Tags"></span></a>
 							</li>
 							<li class="mui-table-view-cell">
-								<a>描述<span class="mui-pull-right" data-bind="text:hub.About"></span></a>
+								<a>描述<span class="mui-pull-right" data-bind="text:node.About"></span></a>
 							</li>
+							<!-- ko if: node.Type === 1 -->
 							<li class="mui-table-view-cell">
-								<a><textarea class="mui-pull-right" data-bind="text:hub.Local" disabled></textarea></a>
+								<a>节点类型<span class="mui-pull-right">控制器-开关</span></a>
 							</li>
+							<!-- /ko -->
+							<!-- ko if: node.Type === 2 -->
 							<li class="mui-table-view-cell">
-								<a>纬度<span class="mui-pull-right" data-bind="text:hub.Latitude"></span></a>
+								<a>节点类型<span class="mui-pull-right">控制器-泛型</span></a>
 							</li>
+							<!-- /ko -->
+							<!-- ko if: node.Type === 3 -->
 							<li class="mui-table-view-cell">
-								<a>经度<span class="mui-pull-right" data-bind="text:hub.Longitude"></span></a>
+								<a>节点类型<span class="mui-pull-right">控制器-范围</span></a>
 							</li>
+							<!-- /ko -->
+							<!-- ko if: node.Type === 4 -->
+							<li class="mui-table-view-cell">
+								<a>节点类型<span class="mui-pull-right">传感器-数值型</span></a>
+							</li>
+							<!-- /ko -->
+							<!-- ko if: node.Type === 5 -->
+							<li class="mui-table-view-cell">
+								<a>节点类型<span class="mui-pull-right">传感器-GPS</span></a>
+							</li>
+							<!-- /ko -->
+							<!-- ko if: node.Type === 6 -->
+							<li class="mui-table-view-cell">
+								<a>节点类型<span class="mui-pull-right">传感器-泛型</span></a>
+							</li>
+							<!-- /ko -->
+							<!-- ko if: node.Type === 7 -->
+							<li class="mui-table-view-cell">
+								<a>节点类型<span class="mui-pull-right">传感器-图片</span></a>
+							</li>
+							<!-- /ko -->
 						</ul>
 						<div class="mui-button-row">
-							<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" data-bind="click: $root.hubedit">修改</button>&nbsp;&nbsp;
-							<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" data-bind="click: $root.hubdel">删除</button>
+							<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" data-bind="click: $root.nodeedit">修改</button>&nbsp;&nbsp;
+							<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" data-bind="click: $root.nodedel">删除</button>
 						</div>
 					</div>
 				</div>
 				<div class="mui-card-footer">
-					<div class="mui-button-row">
-						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" data-bind="click: $root.nodeadd">添加节点</button>&nbsp;&nbsp;
-						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" id="bt_nodedelete">节点管理</button>
-					</div>
+					<a class="mui-card-link" href="#" data-bind="text:node.HubId"></a>
+					<a class="mui-card-link" href="#" data-bind="click: $root.hub_mg">取消</a>
 				</div>
 			</div>
 			<!-- /ko -->
@@ -55,7 +79,89 @@
 		<script src="js/app.js"></script>
 		<script src="js/knockout-3.3.0.js"></script>
 		<script type="text/javascript">
-		
+			mui.init();
+			mui.plusReady(function() {
+				var hubid;
+				window.addEventListener('sethubid', function(event) {
+					var obj = JSON.parse(event.detail.hub);
+					hubid = obj.Id;
+					dvvm.load();
+				});
+
+				window.addEventListener('reload', function(event) {
+					dvvm.load();
+				});
+
+				function vm() {
+					var self = this;
+
+					self.hub_mg = function() {
+						var nodeadd = plus.webview.getWebviewById('hub_mg.html');
+						plus.webview.show(nodeadd, "fade-in", 300);
+					}
+
+					self.nodeedit = function(obj) {
+						var nodeedit = plus.webview.getWebviewById('node_edit.html');
+						mui.fire(nodeedit, 'sethubid', {
+							'nodeobj': JSON.stringify(obj)
+						})
+						plus.webview.show(nodeedit, "fade-in", 300);
+					}
+
+					self.nodedel = function(obj) {
+						var btnArray = ['否', '是'];
+						mui.confirm('删除节点，确认？', '酷痞物联', btnArray, function(e) {
+							if(e.index == 1) {
+								var state = app.getState();
+								mui.ajax(localStorage.getItem('$svc') + '/api/hub/' + hubid + '/node/' + obj.Id, {
+									dataType: 'json',
+									type: 'delete',
+									headers: {
+										'Content-Type': 'application/json',
+										"Authorization": state.token
+									},
+									success: function(data) {
+										if(data.ok == 1) {
+											self.load();
+										} else {
+											plus.nativeUI.toast(data.err);
+										}
+									},
+									error: function(xhr, type, errorThrown) {
+										plus.nativeUI.toast(Error(xhr.responseText));
+									}
+								});
+							}
+						})
+					}
+
+					self.nodes = ko.observableArray();
+					self.load = function() {
+						var state = app.getState();
+						mui.ajax(localStorage.getItem('$svc') + '/api/hub/' + hubid + '/nodes', {
+							dataType: 'json',
+							type: 'get',
+							headers: {
+								'Content-Type': 'application/json',
+								"Authorization": state.token
+							},
+							success: function(data) {
+								if(data.ok == 1) {
+									self.nodes.removeAll()
+									self.nodes(data.data)
+								} else {
+									plus.nativeUI.toast(data.err);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.toast(Error(xhr.responseText));
+							}
+						});
+					}
+				}
+				var dvvm = new vm();
+				ko.applyBindings(dvvm, document.getElementById("ViewModel"));
+			})
 		</script>
 	</body>
 

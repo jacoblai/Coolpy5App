@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>node_edit</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<style>
+			h5 {
+				margin: 5px 7px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title" id="lb_hubinfotitle">修改节点(Node)</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded" style="margin: 5px;">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>节点编号</label>
+						<input type="text" class="mui-input-clear" id="tb_nodeid" disabled>
+					</div>
+					<div class="mui-input-row">
+						<label>节点名称</label>
+						<input type="text" class="mui-input-clear" id="tb_nodetitle">
+					</div>
+					<div class="mui-input-row">
+						<label>节点标签</label>
+						<input type="text" class="mui-input-clear" id="tb_nodetags">
+					</div>
+
+					<div class="mui-input-row mui-plus-visible">
+						<label>节点描述</label>
+						<input type="text" class="mui-input-clear" id="tb_nodeabout">
+					</div>
+					<div class="mui-input-row">
+						<label>节点类型</label>
+						<input type="text" class="mui-input-clear" id="tb_hubtype" disabled>
+					</div>
+					<br>
+					<div class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" id="bt_editnode">确认</button>&nbsp;&nbsp;
+						<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" id="bt_node_edit_cancel">取消</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			var hubid;
+			var nodeid;
+			var ntype;
+			window.addEventListener('sethubid', function(event) {
+				var obj = JSON.parse(event.detail.nodeobj);
+				hubid = obj.HubId;
+				nodeid = obj.Id;
+				ntype = obj.Type;
+				document.getElementById('tb_nodeid').value = nodeid;
+				document.getElementById('tb_nodetitle').value = obj.Title;
+				document.getElementById('tb_nodeabout').value = obj.About;
+				document.getElementById('tb_nodetags').value = obj.Tags;
+				document.getElementById('tb_hubtype').value = types[obj.Type - 1].text;
+			});
+
+			document.getElementById('bt_editnode').addEventListener('tap', function() {
+				var obj = Object();
+				obj.Title = document.getElementById('tb_nodetitle').value;
+				obj.About = document.getElementById('tb_nodeabout').value;
+				obj.Tags = document.getElementById('tb_nodetags').value.split(",");
+				obj.Type = ntype;
+				if(obj.Title.length == 0 || obj.Title.length > 64 ||
+					obj.About.length == 0 || obj.About.length > 64 ||
+					document.getElementById('tb_nodetags').value.length == 0 || document.getElementById('tb_nodetags').value.length > 64 ||
+					obj.Type == undefined) {
+					plus.nativeUI.toast('数据不符合规范');
+					return;
+				}
+				var state = app.getState();
+				mui.ajax(localStorage.getItem('$svc') + '/api/hub/' + hubid + '/node/' + nodeid, {
+					dataType: 'json',
+					type: 'put',
+					data: JSON.stringify(obj),
+					headers: {
+						'Content-Type': 'application/json',
+						"Authorization": state.token
+					},
+					success: function(data) {
+						if(data.ok == 1) {
+							plus.nativeUI.toast('提交成功');
+							var mg = plus.webview.getWebviewById('node_mg.html');
+							mui.fire(mg, 'reload')
+							plus.webview.show(mg, "fade-in", 300);
+						} else {
+							plus.nativeUI.toast(data.err);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.toast(Error(xhr.responseText));
+					}
+				});
+			})
+
+			document.getElementById('bt_node_edit_cancel').addEventListener("tap", function() {
+				var goback = plus.webview.getWebviewById('node_mg.html');
+				plus.webview.show(goback, "fade-in", 300);
+			})
+
+			var types = [{
+				value: 1,
+				text: '控制器-开关'
+			}, {
+				value: 2,
+				text: '控制器-泛型'
+			}, {
+				value: 3,
+				text: '控制器-范围'
+			}, {
+				value: 4,
+				text: '传感器-数值型'
+			}, {
+				value: 5,
+				text: '传感器-GPS'
+			}, {
+				value: 6,
+				text: '传感器-泛型'
+			}, {
+				value: 7,
+				text: '传感器-图片'
+			}];
+		</script>
+	</body>
+
+</html>

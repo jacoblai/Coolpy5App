@@ -48,7 +48,7 @@
 			(function($, doc) {
 				$.init();
 
-				var subpages = ['hub_add.html', 'hub_mg.html', 'hub_edit.html','node_add.html'];
+				var subpages = ['hub_add.html', 'hub_mg.html', 'hub_edit.html','node_add.html','node_mg.html','node_edit.html'];
 				var subpage_style = {
 					top: '45px',
 					bottom: '51px'
@@ -59,7 +59,7 @@
 				$.plusReady(function() {
 					//创建子页面，首个选项卡页面显示，其它均隐藏；
 					var self = plus.webview.currentWebview();
-					for(var i = 0; i < 4; i++) {
+					for(var i = 0; i < subpages.length; i++) {
 						var temp = {};
 						var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
 						if(i > 0) {

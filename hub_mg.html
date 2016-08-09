@@ -45,7 +45,7 @@
 				<div class="mui-card-footer">
 					<div class="mui-button-row">
 						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" data-bind="click: $root.nodeadd">添加节点</button>&nbsp;&nbsp;
-						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" id="bt_nodedelete">节点管理</button>
+						<button type="button" class="mui-btn mui-btn-purple" onclick="return false;" data-bind="click: $root.node_mg">节点管理</button>
 					</div>
 				</div>
 			</div>
@@ -63,6 +63,14 @@
 
 				function vm() {
 					var self = this;
+
+					self.node_mg = function(obj) {
+						var nodemg = plus.webview.getWebviewById('node_mg.html');
+						mui.fire(nodemg, 'sethubid', {
+							'hub': JSON.stringify(obj)
+						})
+						plus.webview.show(nodemg, "fade-in", 300);
+					}
 
 					self.nodeadd = function(obj) {
 						var nodeadd = plus.webview.getWebviewById('node_add.html');

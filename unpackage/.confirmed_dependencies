@@ -5,7 +5,9 @@
 			"hub_add.html",
 			"hub_mg.html",
 			"hub_edit.html",
-			"node_add.html"
+			"node_add.html",
+			"node_mg.html",
+			"node_edit.html"
 		],
 		"resources": [
 			"js/app.js",
@@ -138,6 +140,27 @@
 			"js/mui.poppicker.js",
 			"css/mui.poppicker.css",
 			"css/mui.picker.css"
+		]
+	},
+	"node_mg.html": {
+		"resources": [
+			"js/knockout-3.3.0.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	},
+	"node_edit.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.picker.js",
+			"js/mui.min.js",
+			"css/common.css",
+			"js/mui.poppicker.js",
+			"css/mui.min.css",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"fonts/mui.ttf"
 		]
 	}
 }
