@@ -19,12 +19,10 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<!--<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">控制器</h1>
-		</header>
-		<div class="mui-content" id="hublist">
-
-		</div>
+		</header>-->
+		<div class="mui-content" id="hublist"></div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
 		<script>
@@ -50,6 +48,14 @@
 											nodes += creategen(nd);
 										} else if(nd.Type == 3) {
 											nodes += createran(nd);
+										} else if(nd.Type == 4) {
+											nodes += createval(nd);
+										} else if(nd.Type == 5) {
+											nodes += creategps(nd);
+										} else if(nd.Type == 6) {
+											nodes += creategenvalue(nd);
+										} else if(nd.Type == 7) {
+											nodes += createimg(nd);
 										}
 									})
 									hublist.innerHTML += createcard(hub, nodes);
@@ -67,9 +73,63 @@
 					'<div class="mui-card-header">' + hub.Title + '</div>' +
 					'<ul class="mui-table-view">' + nodehtml +
 					'</ul>' +
-					'<div class="mui-card-footer">页脚</div>' +
+					'<div class="mui-card-footer">' + hub.About + '</div>' +
 					'</div>';
 				return card;
+			}
+
+			function createval(node) {
+				var val = '<li class="mui-table-view-cell mui-media">' +
+					'<div class="mui-slider-left mui-disabled">' +
+					'<a class="mui-btn mui-btn-red mui-icon mui-icon-image"></a>' +
+					'<a class="mui-btn mui-btn-yellow mui-icon mui-icon-list"></a>' +
+					'</div>' +
+					'<div class="mui-slider-handle">' +
+					'<a href="javascript:;" class="mui-navigate-right">' +
+					'<img class="mui-media-object mui-pull-left" src="images/val.png">' +
+					'<div class="mui-media-body">' + node.Title +
+					'<p class="mui-ellipsis">' + node.About + '</p>' +
+					'</div>' +
+					'</a>' +
+					'</div>' +
+					'</li>';
+				return val;
+			}
+
+			function creategps(node) {
+				var val = '<li class="mui-table-view-cell mui-media">' +
+					'<a href="javascript:;" class="mui-navigate-right">' +
+					'<img class="mui-media-object mui-pull-left" src="images/gps.png">' +
+					'<div class="mui-media-body">' + node.Title +
+					'<p class="mui-ellipsis">' + node.About + '</p>' +
+					'</div>' +
+					'</a>' +
+					'</li>';
+				return val;
+			}
+
+			function creategenvalue(node) {
+				var val = '<li class="mui-table-view-cell mui-media">' +
+					'<a href="javascript:;" class="mui-navigate-right">' +
+					'<img class="mui-media-object mui-pull-left" src="images/gen.png">' +
+					'<div class="mui-media-body">' + node.Title +
+					'<p class="mui-ellipsis">' + node.About + '</p>' +
+					'</div>' +
+					'</a>' +
+					'</li>';
+				return val;
+			}
+
+			function createimg(node) {
+				var val = '<li class="mui-table-view-cell mui-media">' +
+					'<a href="javascript:;" class="mui-navigate-right">' +
+					'<img class="mui-media-object mui-pull-left" src="images/img.png">' +
+					'<div class="mui-media-body">' + node.Title +
+					'<p class="mui-ellipsis">' + node.About + '</p>' +
+					'</div>' +
+					'</a>' +
+					'</li>';
+				return val;
 			}
 
 			function createsw(node) {
@@ -92,7 +152,9 @@
 
 			function createran(node) {
 				var ran = '<li class="mui-table-view-cell">' +
-					'<div class="mui-input-row">' + node.Title + '</div><br><br>' +
+					'<div class="mui-input-row">' + node.Title + '</div>' +
+					'<div class="mui-input-row">' + node.About + '</div>' +
+					'<div class="mui-input-row">' + node.Tags + '</div>' +
 					'<div class="mui-input-row mui-button-row mui-input-range">' +
 					'<input type="range" value="50" min="0" max="100">' +
 					'</div>' +

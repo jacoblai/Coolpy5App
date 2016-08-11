@@ -96,8 +96,8 @@
 					var self = this;
 
 					self.hub_mg = function() {
-						var nodeadd = plus.webview.getWebviewById('hub_mg.html');
-						plus.webview.show(nodeadd, "fade-in", 300);
+						var hubmg = plus.webview.getWebviewById('hub_mg.html');
+						plus.webview.show(hubmg, "fade-in", 300);
 					}
 
 					self.nodeedit = function(obj) {
@@ -125,6 +125,8 @@
 											self.load();
 										} else {
 											plus.nativeUI.toast(data.err);
+											var hubmg = plus.webview.getWebviewById('hub_mg.html');
+											plus.webview.show(hubmg, "fade-in", 300);
 										}
 									},
 									error: function(xhr, type, errorThrown) {
@@ -150,7 +152,9 @@
 									self.nodes.removeAll()
 									self.nodes(data.data)
 								} else {
-									plus.nativeUI.toast(data.err);
+									var hubmg = plus.webview.getWebviewById('hub_mg.html');
+									plus.webview.show(hubmg, "fade-in", 300);
+									plus.nativeUI.toast('此枢纽没发现节点');
 								}
 							},
 							error: function(xhr, type, errorThrown) {

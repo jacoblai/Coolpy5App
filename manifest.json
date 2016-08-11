@@ -401,7 +401,12 @@
 					"css/mui.min.css",
 					"fonts/mui.ttf",
 					"js/knockout-3.3.0.js",
-					"js/vue.js"
+					"js/vue.js",
+					"images/qq.png",
+					"images/val.png",
+					"images/img.png",
+					"images/gps.png",
+					"images/gen.png"
 				],
 				"refer": [],
 				"priority": 0
