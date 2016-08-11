@@ -214,7 +214,8 @@
 					"js/mui.min.js",
 					"js/app.js",
 					"js/base64.js",
-					"hub_add.html"
+					"hub_add.html",
+					"view_ctrls.html"
 				],
 				"refer": [
 					"setting.html",
@@ -388,6 +389,19 @@
 					"css/mui.poppicker.css",
 					"css/mui.picker.css",
 					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"view_ctrls.html": {
+				"resources": [
+					"js/app.js",
+					"js/mui.min.js",
+					"css/common.css",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"js/knockout-3.3.0.js",
+					"js/vue.js"
 				],
 				"refer": [],
 				"priority": 0

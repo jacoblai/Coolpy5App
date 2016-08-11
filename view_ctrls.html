@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>vew_ctrls</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+		<style>
+			h5 {
+				margin: 5px 7px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">控制器</h1>
+		</header>
+		<div class="mui-content" id="hublist">
+
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			mui.init({
+				swipeBack: false //启用右滑关闭功能
+			});
+			mui.plusReady(function() {
+				var hublist = document.getElementById("hublist");
+				app.ldhGetOrDel('/api/hubs', 'get', function(result) {
+					if(result.ok == 1) {
+						setTimeout(function() {
+							mui(".mui-switch").switch();
+							mui('.mui-input-row input').input();
+						}, 2000)
+						mui.each(result.data, function(index, hub) {
+							app.ldhGetOrDel('/api/hub/' + hub.Id + '/nodes', 'get', function(resultNodes) {
+								if(resultNodes.ok == 1) {
+									var nodes = "";
+									mui.each(resultNodes.data, function(index, nd) {
+										if(nd.Type == 1) {
+											nodes += createsw(nd);
+										} else if(nd.Type == 2) {
+											nodes += creategen(nd);
+										} else if(nd.Type == 3) {
+											nodes += createran(nd);
+										}
+									})
+									hublist.innerHTML += createcard(hub, nodes);
+								}
+							})
+						})
+					} else {
+						plus.nativeUI.toast(result.err);
+					}
+				})
+			})
+
+			function createcard(hub, nodehtml) {
+				var card = '<div class="mui-card">' +
+					'<div class="mui-card-header">' + hub.Title + '</div>' +
+					'<ul class="mui-table-view">' + nodehtml +
+					'</ul>' +
+					'<div class="mui-card-footer">页脚</div>' +
+					'</div>';
+				return card;
+			}
+
+			function createsw(node) {
+				var sw = '<li class="mui-table-view-cell">' +
+					'<span>' + node.Title + '</span>' +
+					'<div class="mui-switch">' +
+					'<div class="mui-switch-handle"></div>' +
+					'</div>' +
+					'</li>';
+				return sw;
+			}
+
+			function creategen(node) {
+				var gen = '<li class="mui-table-view-cell">' +
+					'<span>' + node.Title + '</span>' +
+					'<button type="button" class="mui-btn mui-btn-primary">发&nbsp;&nbsp;送</button>' +
+					'</li>';
+				return gen;
+			}
+
+			function createran(node) {
+				var ran = '<li class="mui-table-view-cell">' +
+					'<div class="mui-input-row">' + node.Title + '</div><br><br>' +
+					'<div class="mui-input-row mui-button-row mui-input-range">' +
+					'<input type="range" value="50" min="0" max="100">' +
+					'</div>' +
+					'</li>';
+				return ran;
+			}
+		</script>
+	</body>
+
+</html>

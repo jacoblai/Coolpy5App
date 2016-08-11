@@ -7,7 +7,8 @@
 			"hub_edit.html",
 			"node_add.html",
 			"node_mg.html",
-			"node_edit.html"
+			"node_edit.html",
+			"view_ctrls.html"
 		],
 		"resources": [
 			"js/app.js",
@@ -15,7 +16,8 @@
 			"css/mui.min.css",
 			"fonts/mui.ttf",
 			"js/base64.js",
-			"hub_add.html"
+			"hub_add.html",
+			"view_ctrls.html"
 		]
 	},
 	"login.html": {
@@ -161,6 +163,17 @@
 			"css/mui.poppicker.css",
 			"css/mui.picker.css",
 			"fonts/mui.ttf"
+		]
+	},
+	"view_ctrls.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"css/common.css",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"js/knockout-3.3.0.js",
+			"js/vue.js"
 		]
 	}
 }

@@ -4,8 +4,28 @@
  * 请注意将相关方法调整成 “基于服务端Service” 的实现。
  **/
 (function($, owner) {
+	owner.ldhGetOrDel = function(url, meth, callback) {
+		callback = callback || $.noop;
+		var state = owner.getState();
+		mui.ajax(localStorage.getItem('$svc') + url, {
+			dataType: 'json',
+			type: meth,
+			headers: {
+				'Content-Type': 'application/json',
+				"Authorization": state.token
+			},
+			success: function(data) {
+				return callback(data);
+			},
+			error: function(xhr, type, errorThrown) {
+				return callback(new Error(xhr.responseText))
+			}
+		});
+	}
+
 	owner.relogin = function(state, callback) {
 			callback = callback || $.noop;
+			var w = plus.nativeUI.showWaiting("请等待...");
 			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
 				dataType: 'json',
 				type: 'get',
@@ -14,6 +34,7 @@
 					"Authorization": state.token
 				},
 				success: function(data) {
+					w.close();
 					if(data.ok == 1) {
 						return callback(undefined);
 					} else {
@@ -21,6 +42,7 @@
 					}
 				},
 				error: function(xhr, type, errorThrown) {
+					w.close();
 					return callback(Error(xhr.responseText));
 				}
 			});
@@ -38,7 +60,7 @@
 			return callback('密码验证失败');
 		}
 		var token = "Basic " + base64.encode(loginInfo.account + ":" + loginInfo.password);
-		var w=plus.nativeUI.showWaiting("处理中，请等待...");
+		var w = plus.nativeUI.showWaiting("请等待...");
 		$.ajax(localStorage.getItem('$svc') + '/api/user/' + loginInfo.account, {
 			dataType: 'json',
 			type: 'get',
