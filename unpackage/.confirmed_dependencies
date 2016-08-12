@@ -178,7 +178,11 @@
 			"images/val.png",
 			"images/img.png",
 			"images/gps.png",
-			"images/gen.png"
+			"images/gen.png",
+			"view_ctrls.html"
+		],
+		"refer": [
+			"view_ctrls.html"
 		]
 	}
 }

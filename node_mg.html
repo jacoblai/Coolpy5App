@@ -21,6 +21,12 @@
 					<div class="mui-card-content-inner">
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
+								<a>枢纽ID<span class="mui-pull-right" data-bind="text:node.HubId"></span></a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a>节点ID<span class="mui-pull-right" data-bind="text:node.Id"></span></a>
+							</li>
+							<li class="mui-table-view-cell">
 								<a>标签<span class="mui-pull-right" data-bind="text:node.Tags"></span></a>
 							</li>
 							<li class="mui-table-view-cell">
@@ -69,7 +75,7 @@
 					</div>
 				</div>
 				<div class="mui-card-footer">
-					<a class="mui-card-link" href="#" data-bind="text:node.HubId"></a>
+					<!--<a class="mui-card-link" href="#" data-bind="text:node.HubId"></a>-->
 					<a class="mui-card-link" href="#" data-bind="click: $root.hub_mg">取消</a>
 				</div>
 			</div>

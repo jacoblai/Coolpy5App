@@ -4,12 +4,54 @@
  * 请注意将相关方法调整成 “基于服务端Service” 的实现。
  **/
 (function($, owner) {
+	owner.ldhPostOrPutForDps = function(url, meth, data, callback) {
+		callback = callback || $.noop;
+		var state = owner.getState();
+		mui.ajax(localStorage.getItem('$svc') + url, {
+			dataType: 'json',
+			type: meth,
+			async: false,
+			data: data,
+			headers: {
+				'Content-Type': 'application/json',
+				"U-ApiKey": state.Ukey
+			},
+			success: function(data) {
+				return callback(data);
+			},
+			error: function(xhr, type, errorThrown) {
+				return callback(new Error(xhr.responseText))
+			}
+		});
+	}
+
+	owner.ldhGetOrDelForDps = function(url, meth, callback) {
+		callback = callback || $.noop;
+		var state = owner.getState();
+		mui.ajax(localStorage.getItem('$svc') + url, {
+			dataType: 'json',
+			type: meth,
+			async: false,
+			headers: {
+				'Content-Type': 'application/json',
+				"U-ApiKey": state.Ukey
+			},
+			success: function(data) {
+				return callback(data);
+			},
+			error: function(xhr, type, errorThrown) {
+				return callback(new Error(xhr.responseText))
+			}
+		});
+	}
+
 	owner.ldhGetOrDel = function(url, meth, callback) {
 		callback = callback || $.noop;
 		var state = owner.getState();
 		mui.ajax(localStorage.getItem('$svc') + url, {
 			dataType: 'json',
 			type: meth,
+			async: false,
 			headers: {
 				'Content-Type': 'application/json',
 				"Authorization": state.token

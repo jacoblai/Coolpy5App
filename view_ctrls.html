@@ -34,8 +34,12 @@
 				app.ldhGetOrDel('/api/hubs', 'get', function(result) {
 					if(result.ok == 1) {
 						setTimeout(function() {
-							mui(".mui-switch").switch();
 							mui('.mui-input-row input').input();
+							mui(".mui-switch").switch();
+							mui.each(mui(".mui-switch"), function(i, ele) {
+								ele.removeEventListener('toggle', swput);
+								ele.addEventListener('toggle', swput);
+							})
 						}, 2000)
 						mui.each(result.data, function(index, hub) {
 							app.ldhGetOrDel('/api/hub/' + hub.Id + '/nodes', 'get', function(resultNodes) {
@@ -43,11 +47,23 @@
 									var nodes = "";
 									mui.each(resultNodes.data, function(index, nd) {
 										if(nd.Type == 1) {
-											nodes += createsw(nd);
+											app.ldhGetOrDelForDps('/api/hub/' + nd.HubId + '/node/' + nd.Id + '/datapoint', 'get', function(db) {
+												if(db.ok == 1) {
+													nodes += createsw(nd, db.data);
+												}
+											})
 										} else if(nd.Type == 2) {
-											nodes += creategen(nd);
+											app.ldhGetOrDelForDps('/api/hub/' + nd.HubId + '/node/' + nd.Id + '/datapoint', 'get', function(db) {
+												if(db.ok == 1) {
+													nodes += creategen(nd, db.data);
+												}
+											})
 										} else if(nd.Type == 3) {
-											nodes += createran(nd);
+											app.ldhGetOrDelForDps('/api/hub/' + nd.HubId + '/node/' + nd.Id + '/datapoint', 'get', function(db) {
+												if(db.ok == 1) {
+													nodes += createran(nd, db.data);
+												}
+											})
 										} else if(nd.Type == 4) {
 											nodes += createval(nd);
 										} else if(nd.Type == 5) {
@@ -67,6 +83,53 @@
 					}
 				})
 			})
+
+			function swput(event) {
+				var hubnode = event.target.id.split("_");
+				var Svalue;
+				if(event.detail.isActive) {
+					Svalue = JSON.stringify({
+						"Svalue": 1
+					});
+				} else {
+					Svalue = JSON.stringify({
+						"Svalue": 2
+					});
+				}
+				app.ldhPostOrPutForDps('/api/hub/' + hubnode[1] + '/node/' + hubnode[2] + '/datapoint', 'put', Svalue, function(result) {
+					if(result.ok != 1) {
+						plus.nativeUI.toast(result.err);
+					}
+				})
+			}
+
+			function genput(event) {
+				if(event.keyCode == 13) {
+					var hubnode = event.target.id.split("_");
+					var Gvalue = JSON.stringify({
+						"Gvalue": event.target.value
+					});
+					app.ldhPostOrPutForDps('/api/hub/' + hubnode[1] + '/node/' + hubnode[2] + '/datapoint', 'put', Gvalue, function(result) {
+						if(result.ok == 1) {
+							plus.nativeUI.toast("发送成功！");
+						} else {
+							plus.nativeUI.toast(result.err);
+						}
+					})
+				}
+			}
+
+			function ranput(event) {
+				var hubnode = event.target.id.split("_");
+				var Rvalue = JSON.stringify({
+					"Rvalue": parseInt(event.target.value, 10)
+				});
+				app.ldhPostOrPutForDps('/api/hub/' + hubnode[1] + '/node/' + hubnode[2] + '/datapoint', 'put', Rvalue, function(result) {
+					if(result.ok != 1) {
+						plus.nativeUI.toast(result.err);
+					}
+				})
+			}
 
 			function createcard(hub, nodehtml) {
 				var card = '<div class="mui-card">' +
@@ -132,31 +195,38 @@
 				return val;
 			}
 
-			function createsw(node) {
-				var sw = '<li class="mui-table-view-cell">' +
-					'<span>' + node.Title + '</span>' +
-					'<div class="mui-switch">' +
-					'<div class="mui-switch-handle"></div>' +
+			function createsw(node, db) {
+				var sw = '<li class="mui-table-view-cell">' + '<span>' + node.Title + '</span>';
+				if(db.Svalue == 1) {
+					sw += '<div id="sw_' + db.HubId + '_' + db.NodeId + '" class="mui-switch mui-active">';
+				} else {
+					sw += '<div id="sw_' + db.HubId + '_' + db.NodeId + '" class="mui-switch">';
+				}
+				sw += '<div class="mui-switch-handle"></div>' +
 					'</div>' +
 					'</li>';
 				return sw;
 			}
 
-			function creategen(node) {
+			function creategen(node, db) {
 				var gen = '<li class="mui-table-view-cell">' +
-					'<span>' + node.Title + '</span>' +
-					'<button type="button" class="mui-btn mui-btn-primary">发&nbsp;&nbsp;送</button>' +
+					'<div class="mui-input-row">' +
+					'<div>' + node.Title + '</div>' +
+					'<input id="geninput_' + db.HubId + '_' + db.NodeId + '" type="text" value="' + db.Gvalue +
+					'" class="mui-input-clear" onkeypress="genput(event)">' +
+					'</div>' +
 					'</li>';
 				return gen;
 			}
 
-			function createran(node) {
+			function createran(node, db) {
 				var ran = '<li class="mui-table-view-cell">' +
 					'<div class="mui-input-row">' + node.Title + '</div>' +
 					'<div class="mui-input-row">' + node.About + '</div>' +
 					'<div class="mui-input-row">' + node.Tags + '</div>' +
 					'<div class="mui-input-row mui-button-row mui-input-range">' +
-					'<input type="range" value="50" min="0" max="100">' +
+					'<input id="raninput_' + db.HubId + '_' + db.NodeId + '" type="range" value="' + db.Rvalue + '" min="' + db.Min + '" max="' + db.Max + '" step="' + db.Step +
+					'" onchange="ranput(event)">' +
 					'</div>' +
 					'</li>';
 				return ran;
