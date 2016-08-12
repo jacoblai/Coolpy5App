@@ -98,6 +98,16 @@
 					dvvm.load();
 				});
 
+//				window.addEventListener('show', function(event) {
+//					//注册返回事件
+//					mui.oldBack = mui.back;
+//					mui.back = function(event) {
+//						var hubmg = plus.webview.getWebviewById('hub_mg.html');
+//						plus.webview.show(hubmg, "fade-in", 300);
+//						mui.back = mui.oldBack;
+//					};
+//				})
+
 				function vm() {
 					var self = this;
 
@@ -160,7 +170,7 @@
 								} else {
 									var hubmg = plus.webview.getWebviewById('hub_mg.html');
 									plus.webview.show(hubmg, "fade-in", 300);
-									plus.nativeUI.toast('此枢纽没发现节点');
+									plus.nativeUI.toast("此枢纽没发现节点")
 								}
 							},
 							error: function(xhr, type, errorThrown) {

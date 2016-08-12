@@ -121,6 +121,7 @@
 					self.hubs = ko.observableArray();
 					self.load = function() {
 						var state = app.getState();
+						plus.nativeUI.showWaiting()
 						mui.ajax(localStorage.getItem('$svc') + '/api/hubs', {
 							dataType: 'json',
 							type: 'get',
@@ -129,6 +130,7 @@
 								"Authorization": state.token
 							},
 							success: function(data) {
+								plus.nativeUI.closeWaiting()
 								if(data.ok == 1) {
 									self.hubs.removeAll()
 									self.hubs(data.data)
@@ -137,6 +139,7 @@
 								}
 							},
 							error: function(xhr, type, errorThrown) {
+								plus.nativeUI.closeWaiting()
 								plus.nativeUI.toast(Error(xhr.responseText));
 							}
 						});
