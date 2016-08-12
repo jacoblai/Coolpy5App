@@ -188,9 +188,9 @@
 							toMain();
 						});
 					});
-					$.enterfocus('#login-form input', function() {
-						$.trigger(loginButton, 'tap');
-					});
+//					$.enterfocus('#login-form input', function() {
+//						$.trigger(loginButton, 'tap');
+//					});
 					autoLoginButton.classList[settings.autoLogin ? 'add' : 'remove']('mui-active')
 					autoLoginButton.addEventListener('toggle', function(event) {
 						setTimeout(function() {
