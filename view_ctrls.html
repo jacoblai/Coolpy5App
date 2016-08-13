@@ -84,6 +84,22 @@
 				})
 			})
 
+			function goto_gens(event) {
+				var alink;
+				if(event.target.tagName == "A") {
+					alink = event.target;
+				} else if(event.target.tagName == "P") {
+					alink = event.target.parentElement.parentElement;
+				} else {
+					alink = event.target.parentElement;
+				}
+				var page = plus.webview.getWebviewById('sub/gens.html');
+				mui.fire(page, 'sethubid', {
+					'parentid': alink.id
+				})
+				plus.webview.show(page, "fade-in", 300);
+			}
+
 			function swput(event) {
 				var hubnode = event.target.id.split("_");
 				var Svalue;
@@ -173,7 +189,7 @@
 
 			function creategenvalue(node) {
 				var val = '<li class="mui-table-view-cell mui-media">' +
-					'<a href="javascript:;" class="mui-navigate-right">' +
+					'<a href="javascript:;" id="genval_' + node.HubId + '_' + node.Id + '" onclick="goto_gens(event)" class="mui-navigate-right">' +
 					'<img class="mui-media-object mui-pull-left" src="images/gen.png">' +
 					'<div class="mui-media-body">' + node.Title +
 					'<p class="mui-ellipsis">' + node.About + '</p>' +
