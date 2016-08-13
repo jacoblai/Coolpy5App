@@ -419,7 +419,8 @@
 					"js/vue.js",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"images/gen.png"
+					"images/gen.png",
+					"js/app.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -18,8 +18,8 @@
 						<a data-href="{{item.href}}">
 							<img class="mui-media-object mui-pull-left" src="../images/gen.png">
 							<div class="mui-media-body">
-								{{item.title}}
-								<p class="mui-ellipsis">{{item.descrition}}</p>
+								{{item.TimeStamp}}
+								<p class="mui-ellipsis">{{item.Value}}</p>
 							</div>
 						</a>
 					</li>
@@ -29,7 +29,10 @@
 
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js"></script>
 		<script type="text/javascript">
+			var hubid;
+			var nodeid;
 			var home = new Vue({
 				el: '#home',
 				data: {
@@ -50,13 +53,10 @@
 					});
 					if(mui.os.plus) {
 						mui.plusReady(function() {
-							var hubid;
-							var nodeid;
 							window.addEventListener('sethubid', function(event) {
 								var obj = event.detail.parentid.split("_");
 								hubid = obj[1];
 								nodeid = obj[2];
-                                console.log(event.detail.parentid)
 								//注册返回事件
 								mui.oldBack = mui.back;
 								mui.back = function(event) {
@@ -64,7 +64,6 @@
 									plus.webview.show(hubmg, "fade-in", 300);
 									mui.back = mui.oldBack;
 								};
-
 								mui('#pullrefresh').pullRefresh().pullupLoading();
 							});
 						});
@@ -93,17 +92,14 @@
 					// 上拉加载具体业务实现
 					pullupRefresh: function() {
 						var self = this;
-						setTimeout(function() {
-							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
-							for(var i = 0; i < 15; i++) {
-								self.items.push({
-									href: i + '.html',
-									src: 'img/lazyload.gif',
-									title: 'up' + i,
-									descrition: '能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？'
-								})
-							}
-						}, 1500);
+						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=2016-08-13T00:00:00Z&end=2016-08-14T23:59:59Z&interval=1&page=1', 'get', function(db) {
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+								if(db.ok == 1) {
+									mui.each(db.data, function(index, data) {
+										self.items.push(data);
+									});
+								}
+						})
 					},
 					list: function(index) {
 						var subUrl = this.items[index].href;
