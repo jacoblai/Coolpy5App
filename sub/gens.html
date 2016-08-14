@@ -92,13 +92,18 @@
 					// 上拉加载具体业务实现
 					pullupRefresh: function() {
 						var self = this;
-						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=2016-08-13T00:00:00Z&end=2016-08-14T23:59:59Z&interval=1&page=1', 'get', function(db) {
-								mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
-								if(db.ok == 1) {
-									mui.each(db.data, function(index, data) {
-										self.items.push(data);
-									});
-								}
+						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=2016-08-13T00:00:00Z&end=2016-09-14T23:59:59Z&interval=1&page=1', 'get', function(db) {
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+							if(db.ok == 1) {
+								db.data.sort(function(x, y) {
+									var xtime = Date.parse(x.TimeStamp)
+									var ytime = Date.parse(y.TimeStamp)
+									return ytime - xtime;
+								})
+								mui.each(db.data, function(index, data) {
+									self.items.push(data);
+								});
+							}
 						})
 					},
 					list: function(index) {
