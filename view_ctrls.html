@@ -84,6 +84,23 @@
 				})
 			})
 
+			function goto_gpss(event) {
+				var alink;
+				if(event.target.tagName == "A") {
+					alink = event.target;
+				} else if(event.target.tagName == "P") {
+					alink = event.target.parentElement.parentElement;
+				} else {
+					alink = event.target.parentElement;
+				}
+				var page = plus.webview.getWebviewById('sub/gpss.html');
+				mui.fire(page, 'sethubid', {
+					'parentid': alink.id
+				})
+				plus.webview.show(page, "fade-in", 300);
+				plus.webview.currentWebview().hide()
+			}
+
 			function goto_gens(event) {
 				var alink;
 				if(event.target.tagName == "A") {
@@ -178,7 +195,7 @@
 
 			function creategps(node) {
 				var val = '<li class="mui-table-view-cell mui-media">' +
-					'<a href="javascript:;" class="mui-navigate-right">' +
+					'<a href="javascript:;" id="gpsval_' + node.HubId + '_' + node.Id + '" onclick="goto_gpss(event)" class="mui-navigate-right">' +
 					'<img class="mui-media-object mui-pull-left" src="images/gps.png">' +
 					'<div class="mui-media-body">' + node.Title +
 					'<p class="mui-ellipsis">' + node.About + '</p>' +

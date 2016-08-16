@@ -18,7 +18,7 @@
 			<div class="mui-scroll">
 				<!--数据列表-->
 				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-media" v-for="item in items" v-on:tap="list($index)">
+					<li class="mui-table-view-cell mui-media" v-for="item in items">
 						<a data-href="{{item.href}}">
 							<img class="mui-media-object mui-pull-left" src="../images/gen.png">
 							<div class="mui-media-body">
@@ -198,9 +198,6 @@
 								});
 							}
 						})
-					},
-					list: function(index) {
-
 					}
 				}
 			})

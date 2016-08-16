@@ -224,7 +224,8 @@
 					"node_add.html",
 					"node_mg.html",
 					"node_edit.html",
-					"sub/gens.html"
+					"sub/gens.html",
+					"sub/gpss.html"
 				],
 				"priority": 1
 			},
@@ -409,7 +410,8 @@
 					"images/gps.png",
 					"images/gen.png",
 					"view_ctrls.html",
-					"sub/gens.html"
+					"sub/gens.html",
+					"sub/gpss.html"
 				],
 				"refer": [],
 				"priority": 0
@@ -421,6 +423,17 @@
 					"css/mui.min.css",
 					"images/gen.png",
 					"js/app.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"sub/gpss.html": {
+				"resources": [
+					"js/vue.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"images/gen.png",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
