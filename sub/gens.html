@@ -33,6 +33,35 @@
 		<script type="text/javascript">
 			var hubid;
 			var nodeid;
+			
+			var updatecount = 0;
+			var downdatecount = 0;
+			
+			var start = new Date();
+			start.setHours(start.getHours()+8)//中国时区为+8
+			
+			start.setDate(start.getDate() - 1);//开始时间倒退一天的当前时间
+			var end = new Date();
+			end.setHours(end.getHours()+8)//中国时区为+8
+			
+			function perviewdate(){
+				updatecount +=1;
+				var obj = new Object();
+				obj.start = start;
+				obj.start.setDate(start.getDate() - updatecount);//开始时间倒退一天的当前时间
+				obj.end = end;
+				obj.end.setDate(end.getDate() - updatecount);//开始时间倒退一天的当前时间
+				obj.start = obj.start.toISOString().split('.')[0]+'Z';
+				obj.end = obj.end.toISOString().split('.')[0]+'Z';
+				return obj;
+			}
+			
+			function nextdate(){
+				updatecount +=1;
+				start.setDate(start.getDate() + updatecount);//开始时间倒退一天的当前时间
+				end.setDate(end.getDate() + updatecount);//开始时间倒退一天的当前时间
+			}
+			
 			var home = new Vue({
 				el: '#home',
 				data: {
@@ -77,22 +106,29 @@
 					// 下拉刷新具体业务实现
 					pulldownRefresh: function() {
 						var self = this;
-						setTimeout(function() {
-							for(var i = 0; i < 5; i++) {
-								self.items.unshift({
-									href: i + '.html',
-									src: 'img/lazyload.gif',
-									title: 'dowm' + i,
-									descrition: '能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？'
-								})
-							}
+						var search = perviewdate();
+						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=' + search.start + '&end=' + search.end + '&interval=1&page=1', 'get', function(db) {
 							mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
-						}, 1500);
+							if(db.ok == 1 && db.data.length > 0) {
+								db.data.sort(function(x, y) {
+									var xtime = Date.parse(x.TimeStamp)
+									var ytime = Date.parse(y.TimeStamp)
+									return ytime - xtime;
+								})
+								mui.each(db.data, function(index, data) {
+									self.items.unshift(data);
+								});
+							}else{
+								updatecount -=1;
+							}
+						})
 					},
 					// 上拉加载具体业务实现
 					pullupRefresh: function() {
 						var self = this;
-						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=2016-08-13T00:00:00Z&end=2016-09-14T23:59:59Z&interval=1&page=1', 'get', function(db) {
+						var initstart = start.toISOString().split('.')[0]+'Z';
+						var initend = end.toISOString().split('.')[0]+'Z';
+						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=' + initstart + '&end=' + initend + '&interval=1&page=1', 'get', function(db) {
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
 							if(db.ok == 1) {
 								db.data.sort(function(x, y) {
@@ -107,17 +143,7 @@
 						})
 					},
 					list: function(index) {
-						var subUrl = this.items[index].href;
-						mui.openWindow({
-							url: 'home-sub.html',
-							id: 'homesub',
-							extras: {
-								subUrl: subUrl
-							}
-						});
-						if(!mui.os.plus) {
-							localStorage.setItem('subUrl', subUrl);
-						}
+
 					}
 				}
 			})
