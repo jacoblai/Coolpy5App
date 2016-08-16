@@ -225,7 +225,9 @@
 					"node_mg.html",
 					"node_edit.html",
 					"sub/gens.html",
-					"sub/gpss.html"
+					"sub/gpss.html",
+					"sub/vals.html",
+					"sub/imgs.html"
 				],
 				"priority": 1
 			},
@@ -433,7 +435,34 @@
 					"js/app.js",
 					"js/mui.min.js",
 					"images/gen.png",
+					"css/mui.min.css",
+					"images/gps.png",
+					"images/gps1.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"sub/vals.html": {
+				"resources": [
+					"js/vue.js",
+					"images/gen.png",
+					"js/app.js",
+					"images/val.png",
+					"js/mui.min.js",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"sub/imgs.html": {
+				"resources": [
+					"js/mui.lazyload.js",
+					"js/mui.lazyload.img.js",
+					"js/app.js",
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"images/img.png"
 				],
 				"refer": [],
 				"priority": 0

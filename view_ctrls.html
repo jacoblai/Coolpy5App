@@ -83,6 +83,33 @@
 					}
 				})
 			})
+			
+			function goto_imgs(event){
+				var alink;
+				if(event.target.tagName == "A") {
+					alink = event.target;
+				} else if(event.target.tagName == "P") {
+					alink = event.target.parentElement.parentElement;
+				} else {
+					alink = event.target.parentElement;
+				}
+				var page = plus.webview.getWebviewById('sub/imgs.html');
+				mui.fire(page, 'sethubid', {
+					'parentid': alink.id
+				})
+				plus.webview.show(page, "fade-in", 300);
+				plus.webview.currentWebview().hide()
+			}
+			
+			function goto_vals(event){
+				var hubnode = event.target.id;
+				var page = plus.webview.getWebviewById('sub/vals.html');
+				mui.fire(page, 'sethubid', {
+					'parentid': hubnode
+				})
+				plus.webview.show(page, "fade-in", 300);
+				plus.webview.currentWebview().hide()
+			}
 
 			function goto_gpss(event) {
 				var alink;
@@ -179,7 +206,7 @@
 				var val = '<li class="mui-table-view-cell mui-media">' +
 					'<div class="mui-slider-left mui-disabled">' +
 					'<a class="mui-btn mui-btn-red mui-icon mui-icon-image"></a>' +
-					'<a class="mui-btn mui-btn-yellow mui-icon mui-icon-list"></a>' +
+					'<a class="mui-btn mui-btn-yellow mui-icon mui-icon-list" id="valval_' + node.HubId + '_' + node.Id + '" onclick="goto_vals(event)"></a>' +
 					'</div>' +
 					'<div class="mui-slider-handle">' +
 					'<a href="javascript:;" class="mui-navigate-right">' +
@@ -219,7 +246,7 @@
 
 			function createimg(node) {
 				var val = '<li class="mui-table-view-cell mui-media">' +
-					'<a href="javascript:;" class="mui-navigate-right">' +
+					'<a href="javascript:;" id="imgval_' + node.HubId + '_' + node.Id + '" onclick="goto_imgs(event)" class="mui-navigate-right">' +
 					'<img class="mui-media-object mui-pull-left" src="images/img.png">' +
 					'<div class="mui-media-body">' + node.Title +
 					'<p class="mui-ellipsis">' + node.About + '</p>' +

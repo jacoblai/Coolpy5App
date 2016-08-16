@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>gpss</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body id="home">
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title" id="lb_hubinfotitle">GPS传感器(Gps)</h1>
+			<button class="mui-pull-left mui-btn-link" v-on:tap="btrefresh()">刷新</button>
+		</header>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media" v-for="item in items">
+						<a data-href="{{item.href}}">
+							<img class="mui-media-object mui-pull-left" src="../images/gps1.png">
+							<div class="mui-media-body">
+								{{item.TimeStamp}}
+								<p class="mui-ellipsis">经度:{{item.Lat}}纬度:{{item.Lng}}速度{{item.Speed}}修正:{{item.Offset}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/app.js"></script>
+		<script type="text/javascript">
+			var hubid;
+			var nodeid;
+
+			var isfirsttime = true;
+			var updatecount = 0;
+			var downdatecount = 0;
+
+			function nstart() {
+				var start = new Date();
+				start.setHours(start.getHours() + 8) //中国时区为+8
+				start.setDate(start.getDate() - 1); //开始时间倒退一天的当前时间
+				return start;
+			}
+
+			function nend() {
+				var end = new Date();
+				end.setHours(end.getHours() + 8) //中国时区为+8
+				return end;
+			}
+
+			function perviewdate() {
+				updatecount += 1;
+				var obj = new Object();
+				obj.start = nstart();
+				obj.start.setDate(obj.start.getDate() - updatecount); //开始时间倒退一天的当前时间
+				obj.end = nend();
+				obj.end.setDate(obj.end.getDate() - updatecount); //开始时间倒退一天的当前时间
+				obj.start = obj.start.toISOString().split('.')[0] + 'Z';
+				obj.end = obj.end.toISOString().split('.')[0] + 'Z';
+				return obj;
+			}
+
+			function nextdate() {
+				downdatecount += 1;
+				var obj = new Object();
+				obj.start = nstart();
+				obj.start.setDate(obj.start.getDate() + downdatecount); //开始时间倒退一天的当前时间
+				obj.end = nend();
+				obj.end.setDate(obj.end.getDate() + downdatecount); //开始时间倒退一天的当前时间
+				obj.start = obj.start.toISOString().split('.')[0] + 'Z';
+				obj.end = obj.end.toISOString().split('.')[0] + 'Z';
+				return obj;
+			}
+
+			var home = new Vue({
+				el: '#home',
+				data: {
+					items: []
+				},
+				ready: function() {
+					mui.init({
+						pullRefresh: {
+							container: '#pullrefresh',
+							down: {
+								callback: this.pulldownRefresh
+							},
+							up: {
+								contentrefresh: '正在加载...',
+								callback: this.pullupRefresh
+							}
+						}
+					});
+					if(mui.os.plus) {
+						mui.plusReady(function() {
+							window.addEventListener('sethubid', function(event) {
+								var obj = event.detail.parentid.split("_");
+								hubid = obj[1];
+								nodeid = obj[2];
+								//注册返回事件
+								mui.oldBack = mui.back;
+								mui.back = function(event) {
+									var hubmg = plus.webview.getWebviewById('view_ctrls.html');
+									plus.webview.show(hubmg, "fade-in", 300);
+									mui.back = mui.oldBack;
+								};
+								mui('#pullrefresh').pullRefresh().pullupLoading();
+							});
+						});
+					} else {
+						mui.ready(function() {
+							mui('#pullrefresh').pullRefresh().pullupLoading();
+						});
+					}
+				},
+				methods: {
+					// 下拉刷新具体业务实现
+					pulldownRefresh: function() {
+						var self = this;
+						var search = perviewdate();
+						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=' + search.start + '&end=' + search.end + '&interval=1&page=1', 'get', function(db) {
+							mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+							plus.nativeUI.toast(search.start + '至' + search.end)
+							if(db.ok == 1 && db.data.length > 0) {
+								db.data.sort(function(x, y) {
+									var xtime = Date.parse(x.TimeStamp)
+									var ytime = Date.parse(y.TimeStamp)
+									return ytime - xtime;
+								})
+								mui.each(db.data, function(index, data) {
+									self.items.unshift(data);
+								});
+							}
+						})
+					},
+					// 上拉加载具体业务实现
+					pullupRefresh: function() {
+						var self = this;
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+						if(isfirsttime) {
+							isfirsttime = false;
+							var initstart = nstart().toISOString().split('.')[0] + 'Z';
+							var initend = nend().toISOString().split('.')[0] + 'Z';
+							app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=' + initstart + '&end=' + initend + '&interval=1&page=1', 'get', function(db) {
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+								if(db.ok == 1 && db.data.length > 0) {
+									db.data.sort(function(x, y) {
+										var xtime = Date.parse(x.TimeStamp)
+										var ytime = Date.parse(y.TimeStamp)
+										return ytime - xtime;
+									})
+									mui.each(db.data, function(index, data) {
+										self.items.push(data);
+									});
+								}
+							})
+						} else {
+							var search = nextdate();
+							app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=' + search.start + '&end=' + search.end + '&interval=1&page=1', 'get', function(db) {
+								mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+								plus.nativeUI.toast(search.start + '至' + search.end)
+								if(db.ok == 1 && db.data.length > 0) {
+									db.data.sort(function(x, y) {
+										var xtime = Date.parse(x.TimeStamp)
+										var ytime = Date.parse(y.TimeStamp)
+										return ytime - xtime;
+									})
+									mui.each(db.data, function(index, data) {
+										self.items.push(data);
+									});
+								}
+							})
+						}
+					},
+					btrefresh: function() {
+						var self = this;
+						self.items = [];
+						updatecount = 0;
+						downdatecount = 0;
+						var initstart = nstart().toISOString().split('.')[0] + 'Z';
+						var initend = nend().toISOString().split('.')[0] + 'Z';
+						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=' + initstart + '&end=' + initend + '&interval=1&page=1', 'get', function(db) {
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+							if(db.ok == 1 && db.data.length > 0) {
+								db.data.sort(function(x, y) {
+									var xtime = Date.parse(x.TimeStamp)
+									var ytime = Date.parse(y.TimeStamp)
+									return ytime - xtime;
+								})
+								mui.each(db.data, function(index, data) {
+									self.items.push(data);
+								});
+							}
+						})
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

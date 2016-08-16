@@ -10,7 +10,9 @@
 			"node_edit.html",
 			"view_ctrls.html",
 			"sub/gens.html",
-			"sub/gpss.html"
+			"sub/gpss.html",
+			"sub/vals.html",
+			"sub/imgs.html"
 		],
 		"resources": [
 			"js/app.js",
@@ -206,7 +208,30 @@
 			"js/app.js",
 			"js/mui.min.js",
 			"images/gen.png",
+			"css/mui.min.css",
+			"images/gps.png",
+			"images/gps1.png"
+		]
+	},
+	"sub/vals.html": {
+		"resources": [
+			"js/vue.js",
+			"images/gen.png",
+			"js/app.js",
+			"images/val.png",
+			"js/mui.min.js",
 			"css/mui.min.css"
+		]
+	},
+	"sub/imgs.html": {
+		"resources": [
+			"js/mui.lazyload.js",
+			"js/mui.lazyload.img.js",
+			"js/app.js",
+			"js/vue.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"images/img.png"
 		]
 	}
 }
