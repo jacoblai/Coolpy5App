@@ -256,8 +256,8 @@
 
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/vue.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/mui.lazyload.js"></script>
-		<script src="../js/mui.lazyload.img.js"></script>
+		<script src="../js/mui.pullToRefresh.js"></script>
+		<script src="../js/mui.pullToRefresh.material.js"></script>
 		<script src="../js/mui.zoom.js"></script>
 		<script src="../js/mui.previewimage.js"></script>
 		<script src="../js/app.js"></script>
@@ -367,6 +367,7 @@
 									return ytime - xtime;
 								})
 							}
+							mui.previewImage();
 						})
 					},
 					// 上拉加载具体业务实现
@@ -412,6 +413,7 @@
 										return ytime - xtime;
 									})
 								}
+								mui.previewImage();
 							})
 						}
 					},
@@ -438,6 +440,7 @@
 									return ytime - xtime;
 								})
 							}
+							mui.previewImage();
 						})
 					}
 				}

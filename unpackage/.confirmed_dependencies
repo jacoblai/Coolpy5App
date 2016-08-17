@@ -233,7 +233,9 @@
 			"css/mui.min.css",
 			"images/img.png",
 			"js/mui.previewimage.js",
-			"js/mui.zoom.js"
+			"js/mui.zoom.js",
+			"js/mui.pullToRefresh.js",
+			"js/mui.pullToRefresh.material.js"
 		]
 	}
 }
