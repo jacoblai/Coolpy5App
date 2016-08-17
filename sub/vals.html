@@ -187,6 +187,7 @@
 						var initend = nend().toISOString().split('.')[0] + 'Z';
 						app.ldhGetOrDelForDps('/api/hub/' + hubid + '/node/' + nodeid + '/json?start=' + initstart + '&end=' + initend + '&interval=1&page=1', 'get', function(db) {
 							mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+							plus.nativeUI.toast('已刷新')
 							if(db.ok == 1 && db.data.length > 0) {
 								db.data.sort(function(x, y) {
 									var xtime = Date.parse(x.TimeStamp)

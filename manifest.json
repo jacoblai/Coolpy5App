@@ -462,7 +462,9 @@
 					"js/vue.js",
 					"js/mui.min.js",
 					"css/mui.min.css",
-					"images/img.png"
+					"images/img.png",
+					"js/mui.previewimage.js",
+					"js/mui.zoom.js"
 				],
 				"refer": [],
 				"priority": 0
