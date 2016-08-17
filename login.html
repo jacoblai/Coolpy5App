@@ -139,6 +139,13 @@
 						"url": 'main.html'
 					});
 					var toMain = function() {
+						//使用定时器的原因：
+						//可能执行太快，main页面loaded事件尚未触发就执行自定义事件，此时必然会失败
+						var id = setInterval(function() {
+							clearInterval(id);
+							$.fire(mainPage, 'show', null);
+							mainPage.show("pop-in");
+						}, 20);
 						$.fire(mainPage, 'show', null);
 						setTimeout(function() {
 							$.openWindow({
