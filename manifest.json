@@ -215,19 +215,19 @@
 					"js/app.js",
 					"js/base64.js",
 					"hub_add.html",
-					"view_ctrls.html"
+					"view_ctrls.html",
+					"node_mg.html",
+					"sub/gens.html",
+					"sub/imgs.html",
+					"sub/gpss.html"
 				],
 				"refer": [
 					"setting.html",
 					"hub_mg.html",
 					"hub_edit.html",
 					"node_add.html",
-					"node_mg.html",
 					"node_edit.html",
-					"sub/gens.html",
-					"sub/gpss.html",
-					"sub/vals.html",
-					"sub/imgs.html"
+					"sub/vals.html"
 				],
 				"priority": 1
 			},

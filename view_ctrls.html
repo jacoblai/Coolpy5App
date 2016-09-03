@@ -30,7 +30,14 @@
 				swipeBack: false //启用右滑关闭功能
 			});
 			mui.plusReady(function() {
+				window.addEventListener('reload', function(event) {
+					reload();
+				});
+			})
+			
+			function reload(){
 				var hublist = document.getElementById("hublist");
+				hublist.innerHTML="";
 				app.ldhGetOrDel('/api/hubs', 'get', function(result) {
 					if(result.ok == 1) {
 						setTimeout(function() {
@@ -82,7 +89,7 @@
 						plus.nativeUI.toast(result.err);
 					}
 				})
-			})
+			}
 			
 			function goto_imgs(event){
 				var alink;

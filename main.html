@@ -25,11 +25,11 @@
 			<button id='setting' class=" mui-pull-right mui-btn-link">设置</button>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="view_ctrls.html">
+			<a class="mui-tab-item" href="view_ctrls.html">
 				<span class="mui-icon mui-icon-settings"></span>
 				<span class="mui-tab-label">我的设备</span>
 			</a>
-			<a class="mui-tab-item" href="hub_add.html">
+			<a id="defaultTab" class="mui-tab-item mui-active" href="hub_add.html">
 				<span class="mui-icon mui-icon-flag"></span>
 				<span class="mui-tab-label">添加枢纽</span>
 			</a>
@@ -44,8 +44,9 @@
 			(function($, doc) {
 				$.init();
 
-				var subpages = ['view_ctrls.html','hub_add.html', 'hub_mg.html', 'hub_edit.html','sub/imgs.html',
-				'node_add.html','node_mg.html','node_edit.html','sub/gens.html','sub/gpss.html','sub/vals.html'];
+				var subpages = ['hub_add.html','view_ctrls.html', 'hub_mg.html', 'hub_edit.html', 'sub/imgs.html',
+					'node_add.html', 'node_mg.html', 'node_edit.html', 'sub/gens.html', 'sub/gpss.html', 'sub/vals.html'
+				];
 				var subpage_style = {
 					top: '45px',
 					bottom: '51px'
@@ -129,6 +130,9 @@
 						mui.extend(aniShow, temp);
 						plus.webview.show(targetTab, "fade-in", 300);
 					}
+					if(targetTab == 'view_ctrls.html') {
+						mui.fire(plus.webview.getWebviewById(targetTab), 'reload')
+					}
 					//隐藏当前;
 					plus.webview.hide(activeTab);
 					//更改当前活跃的选项卡
@@ -137,18 +141,18 @@
 						mui.fire(plus.webview.getWebviewById(activeTab), 'reload')
 					}
 				});
-//				//自定义事件，模拟点击“首页选项卡”
-//				document.addEventListener('gohome', function() {
-//					var defaultTab = document.getElementById("defaultTab");
-//					//模拟首页点击
-//					mui.trigger(defaultTab, 'tap');
-//					//切换选项卡高亮
-//					var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
-//					if(defaultTab !== current) {
-//						current.classList.remove('mui-active');
-//						defaultTab.classList.add('mui-active');
-//					}
-//				});
+				//自定义事件，模拟点击“首页选项卡”
+				document.addEventListener('gohome', function() {
+					var defaultTab = document.getElementById("defaultTab");
+					//模拟首页点击
+					mui.trigger(defaultTab, 'tap');
+					//切换选项卡高亮
+					var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+					if(defaultTab !== current) {
+						current.classList.remove('mui-active');
+						defaultTab.classList.add('mui-active');
+					}
+				});
 			}(mui, document));
 		</script>
 	</body>

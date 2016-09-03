@@ -71,6 +71,7 @@
 			$.ajax(localStorage.getItem('$svc') + '/api/user/' + state.Uid, {
 				dataType: 'json',
 				type: 'get',
+				timeout: 5000,
 				headers: {
 					'Content-Type': 'application/json',
 					"Authorization": state.token
@@ -106,6 +107,7 @@
 		$.ajax(localStorage.getItem('$svc') + '/api/user/' + loginInfo.account, {
 			dataType: 'json',
 			type: 'get',
+			timeout: 5000,
 			headers: {
 				'Content-Type': 'application/json',
 				"Authorization": token

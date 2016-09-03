@@ -159,6 +159,24 @@
 							});
 						}, 0);
 					};
+					var setsvcPage = $.preload({
+						"id": 'setsvc',
+						"url": 'set_svc.html'
+					});
+					var toSetsvc = function() {
+						$.fire(setsvcPage, 'show', null);
+						setTimeout(function() {
+							$.openWindow({
+								id: 'setsvc',
+								show: {
+									aniShow: 'pop-in'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						}, 0);
+					};
 					//检查 "登录状态/锁屏状态" 开始
 					if(settings.autoLogin && localStorage.getItem('$svc') && state.token) {
 						app.relogin(state, function(err) {
@@ -207,20 +225,7 @@
 						}, 50);
 					}, false);
 					SetServerUrl.addEventListener('tap', function(event) {
-						$.openWindow({
-							url: 'set_svc.html',
-							id: 'setsvc',
-							preload: true,
-							show: {
-								aniShow: 'pop-in'
-							},
-							styles: {
-								popGesture: 'hide'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
+						 toSetsvc();
 					}, false);
 					InfoButton.addEventListener('tap', function(event) {
 						$.openWindow({

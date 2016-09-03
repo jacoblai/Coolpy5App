@@ -39,7 +39,7 @@
 						<input type="text" class="mui-input-clear" id="tb_hubabout">
 					</div>
 					<br>
-					<div class="mui-input-row mui-search mui-plus-visible">
+					<!--<div class="mui-input-row mui-search mui-plus-visible">
 						<label>枢纽位置</label>
 						<input type="text" class="mui-input-clear" id="tb_address" disabled>
 					</div>
@@ -54,7 +54,7 @@
 					<div class="mui-button-row">
 						<button type="button" class="mui-btn mui-btn-green" onclick="return false;" id="bt_getgeo">设置位置信息</button>
 					</div>
-					<br>
+					<br>-->
 					<div class="mui-button-row">
 						<button type="button" class="mui-btn mui-btn-primary" onclick="return false;" id="bt_hub_edit">确认</button>&nbsp;&nbsp;
 						<button type="button" class="mui-btn mui-btn-danger" onclick="return false;" id="bt_hub_edit_cancel">取消</button>
@@ -75,22 +75,22 @@
 				document.getElementById('tb_hubtitle').value = obj.Title;
 				document.getElementById('tb_hubabout').value = obj.About;
 				document.getElementById('tb_hubtags').value = obj.Tags;
-				document.getElementById('tb_address').value = obj.Local;
-				document.getElementById('tb_latitude').value = obj.Latitude;
-				document.getElementById('tb_longitude').value = obj.Longitude;
+//				document.getElementById('tb_address').value = obj.Local;
+//				document.getElementById('tb_latitude').value = obj.Latitude;
+//				document.getElementById('tb_longitude').value = obj.Longitude;
 			});
 			document.getElementById('bt_hub_edit').addEventListener('tap', function() {
 				var obj = Object();
 				obj.Title = document.getElementById('tb_hubtitle').value;
 				obj.About = document.getElementById('tb_hubabout').value;
 				obj.Tags = document.getElementById('tb_hubtags').value.split(",");
-				obj.Local = document.getElementById('tb_address').value;
-				obj.Latitude = parseFloat(document.getElementById('tb_latitude').value, 10);
-				obj.Longitude = parseFloat(document.getElementById('tb_longitude').value, 10);
+//				obj.Local = document.getElementById('tb_address').value;
+//				obj.Latitude = parseFloat(document.getElementById('tb_latitude').value, 10);
+//				obj.Longitude = parseFloat(document.getElementById('tb_longitude').value, 10);
 				if(obj.Title.length == 0 || obj.Title.length > 64 ||
 					obj.About.length == 0 || obj.About.length > 64 ||
-					document.getElementById('tb_hubtags').value.length == 0 || document.getElementById('tb_hubtags').value.length > 64 ||
-					obj.Local.length == 0 || obj.Local > 64) {
+					document.getElementById('tb_hubtags').value.length == 0 || 
+					document.getElementById('tb_hubtags').value.length > 64) {
 					plus.nativeUI.toast('数据不符合规范');
 					return;
 				}
@@ -123,23 +123,23 @@
 				plus.webview.show(goback, "fade-in", 300);
 			})
 
-			function geoInf(position) {
-				document.getElementById('tb_address').value = position.addresses;
-				document.getElementById('tb_latitude').value = position.coords.latitude;
-				document.getElementById('tb_longitude').value = position.coords.longitude;
-			}
-			// 通过定位模块获取位置信息
-			function getGeocode() {
-				plus.geolocation.getCurrentPosition(geoInf, function(e) {
-					plus.nativeUI.toast("获取定位位置信息失败：" + e.message);
-				}, {
-					geocode: true,
-					provider: 'amap'
-				});
-			}
-			document.getElementById('bt_getgeo').addEventListener('tap', function() {
-				getGeocode()
-			})
+//			function geoInf(position) {
+//				document.getElementById('tb_address').value = position.addresses;
+//				document.getElementById('tb_latitude').value = position.coords.latitude;
+//				document.getElementById('tb_longitude').value = position.coords.longitude;
+//			}
+//			// 通过定位模块获取位置信息
+//			function getGeocode() {
+//				plus.geolocation.getCurrentPosition(geoInf, function(e) {
+//					plus.nativeUI.toast("获取定位位置信息失败：" + e.message);
+//				}, {
+//					geocode: true,
+//					provider: 'amap'
+//				});
+//			}
+//			document.getElementById('bt_getgeo').addEventListener('tap', function() {
+//				getGeocode()
+//			})
 		</script>
 	</body>
 
