@@ -34,64 +34,46 @@
 					reload();
 				});
 			})
-			
-			function reload(){
+
+			function reload() {
 				var hublist = document.getElementById("hublist");
-				hublist.innerHTML="";
-				app.ldhGetOrDel('/api/hubs', 'get', function(result) {
+				hublist.innerHTML = "";
+				app.ldhGetOrDel('/api/hubs/all', 'get', function(result) {
 					if(result.ok == 1) {
-						setTimeout(function() {
-							mui('.mui-input-row input').input();
-							mui(".mui-switch").switch();
-							mui.each(mui(".mui-switch"), function(i, ele) {
-								ele.removeEventListener('toggle', swput);
-								ele.addEventListener('toggle', swput);
-							})
-						}, 2000)
 						mui.each(result.data, function(index, hub) {
-							app.ldhGetOrDel('/api/hub/' + hub.Id + '/nodes', 'get', function(resultNodes) {
-								if(resultNodes.ok == 1) {
-									var nodes = "";
-									mui.each(resultNodes.data, function(index, nd) {
-										if(nd.Type == 1) {
-											app.ldhGetOrDelForDps('/api/hub/' + nd.HubId + '/node/' + nd.Id + '/datapoint', 'get', function(db) {
-												if(db.ok == 1) {
-													nodes += createsw(nd, db.data);
-												}
-											})
-										} else if(nd.Type == 2) {
-											app.ldhGetOrDelForDps('/api/hub/' + nd.HubId + '/node/' + nd.Id + '/datapoint', 'get', function(db) {
-												if(db.ok == 1) {
-													nodes += creategen(nd, db.data);
-												}
-											})
-										} else if(nd.Type == 3) {
-											app.ldhGetOrDelForDps('/api/hub/' + nd.HubId + '/node/' + nd.Id + '/datapoint', 'get', function(db) {
-												if(db.ok == 1) {
-													nodes += createran(nd, db.data);
-												}
-											})
-										} else if(nd.Type == 4) {
-											nodes += createval(nd);
-										} else if(nd.Type == 5) {
-											nodes += creategps(nd);
-										} else if(nd.Type == 6) {
-											nodes += creategenvalue(nd);
-										} else if(nd.Type == 7) {
-											nodes += createimg(nd);
-										}
-									})
-									hublist.innerHTML += createcard(hub, nodes);
+							var nodes = "";
+							mui.each(hub.RNodes, function(index, nd) {
+								if(nd.Type == 1) {
+									nodes += createsw(nd, hub.Id);
+								} else if(nd.Type == 2) {
+									nodes += creategen(nd, hub.Id);
+								} else if(nd.Type == 3) {
+									nodes += createran(nd, hub.Id);
+								} else if(nd.Type == 4) {
+									nodes += createval(nd, hub.Id);
+								} else if(nd.Type == 5) {
+									nodes += creategps(nd, hub.Id);
+								} else if(nd.Type == 6) {
+									nodes += creategenvalue(nd, hub.Id);
+								} else if(nd.Type == 7) {
+									nodes += createimg(nd, hub.Id);
 								}
 							})
+							hublist.innerHTML += createcard(hub, nodes);
+						})
+						mui('.mui-input-row input').input();
+						mui(".mui-switch").switch();
+						mui.each(mui(".mui-switch"), function(i, ele) {
+							ele.removeEventListener('toggle', swput);
+							ele.addEventListener('toggle', swput);
 						})
 					} else {
 						plus.nativeUI.toast(result.err);
 					}
 				})
 			}
-			
-			function goto_imgs(event){
+
+			function goto_imgs(event) {
 				var alink;
 				if(event.target.tagName == "A") {
 					alink = event.target;
@@ -107,8 +89,8 @@
 				plus.webview.show(page, "fade-in", 300);
 				plus.webview.currentWebview().hide()
 			}
-			
-			function goto_vals(event){
+
+			function goto_vals(event) {
 				var hubnode = event.target.id;
 				var page = plus.webview.getWebviewById('sub/vals.html');
 				mui.fire(page, 'sethubid', {
@@ -209,11 +191,11 @@
 				return card;
 			}
 
-			function createval(node) {
+			function createval(node, hubid) {
 				var val = '<li class="mui-table-view-cell mui-media">' +
 					'<div class="mui-slider-left mui-disabled">' +
 					'<a class="mui-btn mui-btn-red mui-icon mui-icon-image"></a>' +
-					'<a class="mui-btn mui-btn-yellow mui-icon mui-icon-list" id="valval_' + node.HubId + '_' + node.Id + '" onclick="goto_vals(event)"></a>' +
+					'<a class="mui-btn mui-btn-yellow mui-icon mui-icon-list" id="valval_' + hubid + '_' + node.Id + '" onclick="goto_vals(event)"></a>' +
 					'</div>' +
 					'<div class="mui-slider-handle">' +
 					'<a href="javascript:;" class="mui-navigate-right">' +
@@ -227,9 +209,9 @@
 				return val;
 			}
 
-			function creategps(node) {
+			function creategps(node, hubid) {
 				var val = '<li class="mui-table-view-cell mui-media">' +
-					'<a href="javascript:;" id="gpsval_' + node.HubId + '_' + node.Id + '" onclick="goto_gpss(event)" class="mui-navigate-right">' +
+					'<a href="javascript:;" id="gpsval_' + hubid + '_' + node.Id + '" onclick="goto_gpss(event)" class="mui-navigate-right">' +
 					'<img class="mui-media-object mui-pull-left" src="images/gps.png">' +
 					'<div class="mui-media-body">' + node.Title +
 					'<p class="mui-ellipsis">' + node.About + '</p>' +
@@ -239,9 +221,9 @@
 				return val;
 			}
 
-			function creategenvalue(node) {
+			function creategenvalue(node, hubid) {
 				var val = '<li class="mui-table-view-cell mui-media">' +
-					'<a href="javascript:;" id="genval_' + node.HubId + '_' + node.Id + '" onclick="goto_gens(event)" class="mui-navigate-right">' +
+					'<a href="javascript:;" id="genval_' + hubid + '_' + node.Id + '" onclick="goto_gens(event)" class="mui-navigate-right">' +
 					'<img class="mui-media-object mui-pull-left" src="images/gen.png">' +
 					'<div class="mui-media-body">' + node.Title +
 					'<p class="mui-ellipsis">' + node.About + '</p>' +
@@ -251,9 +233,9 @@
 				return val;
 			}
 
-			function createimg(node) {
+			function createimg(node, hubid) {
 				var val = '<li class="mui-table-view-cell mui-media">' +
-					'<a href="javascript:;" id="imgval_' + node.HubId + '_' + node.Id + '" onclick="goto_imgs(event)" class="mui-navigate-right">' +
+					'<a href="javascript:;" id="imgval_' + hubid + '_' + node.Id + '" onclick="goto_imgs(event)" class="mui-navigate-right">' +
 					'<img class="mui-media-object mui-pull-left" src="images/img.png">' +
 					'<div class="mui-media-body">' + node.Title +
 					'<p class="mui-ellipsis">' + node.About + '</p>' +
@@ -263,12 +245,12 @@
 				return val;
 			}
 
-			function createsw(node, db) {
+			function createsw(node, hubid) {
 				var sw = '<li class="mui-table-view-cell">' + '<span>' + node.Title + '</span>';
-				if(db.Svalue == 1) {
-					sw += '<div id="sw_' + db.HubId + '_' + db.NodeId + '" class="mui-switch mui-active">';
+				if(node.CtrlerVal == "1") {
+					sw += '<div id="sw_' + hubid + '_' + node.Id + '" class="mui-switch mui-active">';
 				} else {
-					sw += '<div id="sw_' + db.HubId + '_' + db.NodeId + '" class="mui-switch">';
+					sw += '<div id="sw_' + hubid + '_' + node.Id + '" class="mui-switch">';
 				}
 				sw += '<div class="mui-switch-handle"></div>' +
 					'</div>' +
@@ -276,24 +258,25 @@
 				return sw;
 			}
 
-			function creategen(node, db) {
+			function creategen(node, hubid) {
 				var gen = '<li class="mui-table-view-cell">' +
 					'<div class="mui-input-row">' +
 					'<div>' + node.Title + '</div>' +
-					'<input id="geninput_' + db.HubId + '_' + db.NodeId + '" type="text" value="' + db.Gvalue +
+					'<input id="geninput_' + hubid + '_' + node.Id + '" type="text" value="' + node.CtrlerVal +
 					'" onkeypress="genput(event)">' +
 					'</div>' +
 					'</li>';
 				return gen;
 			}
 
-			function createran(node, db) {
+			function createran(node, hubid) {
+				var vals = node.CtrlerVal.split(",");
 				var ran = '<li class="mui-table-view-cell">' +
 					'<div class="mui-input-row">' + node.Title + '</div>' +
 					'<div class="mui-input-row">' + node.About + '</div>' +
 					'<div class="mui-input-row">' + node.Tags + '</div>' +
 					'<div class="mui-input-row mui-button-row mui-input-range">' +
-					'<input id="raninput_' + db.HubId + '_' + db.NodeId + '" type="range" value="' + db.Rvalue + '" min="' + db.Min + '" max="' + db.Max + '" step="' + db.Step +
+					'<input id="raninput_' + hubid + '_' + node.Id + '" type="range" value="' + vals[0] + '" min="' + vals[1] + '" max="' + vals[2] + '" step="' + vals[3] +
 					'" onchange="ranput(event)">' +
 					'</div>' +
 					'</li>';

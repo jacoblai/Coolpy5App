@@ -122,6 +122,7 @@
 					self.load = function() {
 						var state = app.getState();
 						plus.nativeUI.showWaiting()
+						self.hubs.removeAll()
 						mui.ajax(localStorage.getItem('$svc') + '/api/hubs', {
 							dataType: 'json',
 							type: 'get',
@@ -132,7 +133,6 @@
 							success: function(data) {
 								plus.nativeUI.closeWaiting()
 								if(data.ok == 1) {
-									self.hubs.removeAll()
 									self.hubs(data.data)
 								} else {
 									plus.nativeUI.toast(data.err);

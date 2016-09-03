@@ -10,7 +10,6 @@
 		mui.ajax(localStorage.getItem('$svc') + url, {
 			dataType: 'json',
 			type: meth,
-			async: false,
 			data: data,
 			headers: {
 				'Content-Type': 'application/json',
@@ -31,7 +30,6 @@
 		mui.ajax(localStorage.getItem('$svc') + url, {
 			dataType: 'json',
 			type: meth,
-			async: false,
 			headers: {
 				'Content-Type': 'application/json',
 				"U-ApiKey": state.Ukey
@@ -51,7 +49,6 @@
 		mui.ajax(localStorage.getItem('$svc') + url, {
 			dataType: 'json',
 			type: meth,
-			async: false,
 			headers: {
 				'Content-Type': 'application/json',
 				"Authorization": state.token
