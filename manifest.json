@@ -80,7 +80,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"Device":{}
+		"NativeObj": {},"Device":{},"Maps":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -103,7 +103,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"]
+				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -175,308 +175,339 @@
 		}
 	},
 	"dependencies": {
-		"pages": {
-			"setting.html": {
-				"href": "setting.html",
-				"resources": [
-					"js/mui.min.js",
-					"js/mui.view.js",
-					"libs/easymob-webim-sdk/jquery-1.11.1.js",
-					"libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
-					"libs/easymob-webim-sdk/json2.js",
-					"libs/easymob-webim-sdk/easemob.im-1.0.5.js",
-					"js/feedback.js",
-					"js/feedback-page.js",
-					"js/mui.locker.js",
-					"js/app.js",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/feedback-page.css",
-					"images/iconfont-tianjia.png",
-					"images/user-photo.png",
-					"images/cbd.jpg",
-					"images/favicon.png",
-					"js/base64.js",
-					"images/yuantiao.jpg"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 1
-			},
-			"main.html": {
-				"href": "main.html",
-				"resources": [
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"js/mui.min.js",
-					"js/app.js",
-					"js/base64.js",
-					"hub_add.html",
-					"view_ctrls.html",
-					"node_mg.html",
-					"sub/gens.html",
-					"sub/imgs.html",
-					"sub/gpss.html"
-				],
-				"refer": [
-					"setting.html",
-					"hub_mg.html",
-					"hub_edit.html",
-					"node_add.html",
-					"node_edit.html",
-					"sub/vals.html"
-				],
-				"priority": 1
-			},
-			"unlock.html": {
-				"href": "unlock.html",
-				"resources": [
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"js/mui.min.js",
-					"js/mui.locker.js",
-					"js/app.js"
-				],
-				"refer": [
-					"login.html",
-					"main.html"
-				],
-				"priority": 0
-			},
-			"forget_password.html": {
-				"href": "forget_password.html",
-				"resources": [
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/style.css",
-					"js/mui.min.js",
-					"js/app.js"
-				],
-				"priority": 1
-			},
-			"reg.html": {
-				"href": "reg.html",
-				"resources": [
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/style.css",
-					"js/mui.min.js",
-					"js/app.js"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 3
-			},
-			"login.html": {
-				"href": "login.html",
-				"resources": [
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"css/style.css",
-					"js/mui.min.js",
-					"js/mui.enterfocus.js",
-					"js/app.js",
-					"images/qihoo.png",
-					"images/qq.png",
-					"images/sinaweibo.png",
-					"images/weixin.png",
-					"js/base64.js"
-				],
-				"refer": [
-					"unlock.html",
-					"forget_password.html",
-					"main.html",
-					"reg.html",
-					"set_svc.html",
-					"info.html"
-				],
-				"priority": 0
-			},
-			"set_svc.html": {
-				"resources": [
-					"fonts/mui.ttf",
-					"js/app.js",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"css/style.css"
-				],
-				"refer": [
-					"login.html"
-				],
-				"priority": 0
-			},
-			"info.html": {
-				"resources": [
-					"css/app.css",
-					"fonts/mui.ttf",
-					"css/mui.min.css",
-					"images/favicon.png",
-					"js/mui.min.js",
-					"css/style.css",
-					"js/app.js"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"hub_add.html": {
-				"resources": [
-					"js/mui.min.js",
-					"fonts/mui.ttf",
-					"css/mui.min.css",
-					"css/common.css",
-					"js/app.js"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"hub_mg.html": {
-				"resources": [
-					"css/mui.min.css",
-					"images/yuantiao.jpg",
-					"images/favicon.png",
-					"js/mui.min.js",
-					"js/app.js",
-					"js/knockout-3.3.0.js",
-					"fonts/mui.ttf",
-					"hub_edit.html"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"hub_edit.html": {
-				"resources": [
-					"js/app.js",
-					"js/mui.min.js",
-					"css/common.css",
-					"css/mui.min.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"node_add.html": {
-				"resources": [
-					"js/app.js",
-					"js/mui.min.js",
-					"css/common.css",
-					"css/mui.min.css",
-					"js/mui.picker.js",
-					"js/mui.poppicker.js",
-					"css/mui.poppicker.css",
-					"css/mui.picker.css"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"node_mg.html": {
-				"resources": [
-					"js/knockout-3.3.0.js",
-					"js/app.js",
-					"js/mui.min.js",
-					"css/mui.min.css"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"node_edit.html": {
-				"resources": [
-					"js/app.js",
-					"js/mui.picker.js",
-					"js/mui.min.js",
-					"css/common.css",
-					"js/mui.poppicker.js",
-					"css/mui.min.css",
-					"css/mui.poppicker.css",
-					"css/mui.picker.css",
-					"fonts/mui.ttf"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"view_ctrls.html": {
-				"resources": [
-					"js/app.js",
-					"js/mui.min.js",
-					"css/common.css",
-					"css/mui.min.css",
-					"fonts/mui.ttf",
-					"js/knockout-3.3.0.js",
-					"js/vue.js",
-					"images/qq.png",
-					"images/val.png",
-					"images/img.png",
-					"images/gps.png",
-					"images/gen.png",
-					"view_ctrls.html",
-					"sub/gens.html",
-					"sub/gpss.html"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"sub/gens.html": {
-				"resources": [
-					"js/vue.js",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"images/gen.png",
-					"js/app.js"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"sub/gpss.html": {
-				"resources": [
-					"js/vue.js",
-					"js/app.js",
-					"js/mui.min.js",
-					"images/gen.png",
-					"css/mui.min.css",
-					"images/gps.png",
-					"images/gps1.png"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"sub/vals.html": {
-				"resources": [
-					"js/vue.js",
-					"images/gen.png",
-					"js/app.js",
-					"images/val.png",
-					"js/mui.min.js",
-					"css/mui.min.css"
-				],
-				"refer": [],
-				"priority": 0
-			},
-			"sub/imgs.html": {
-				"resources": [
-					"js/mui.lazyload.js",
-					"js/mui.lazyload.img.js",
-					"js/app.js",
-					"js/vue.js",
-					"js/mui.min.js",
-					"css/mui.min.css",
-					"images/img.png",
-					"js/mui.previewimage.js",
-					"js/mui.zoom.js",
-					"js/mui.pullToRefresh.js",
-					"js/mui.pullToRefresh.material.js"
-				],
-				"refer": [],
-				"priority": 0
-			}
-		},
-		"idle": {
-			"resources": [
-				"js/service.js",
-				"libs/easymob-webim-sdk/quickstart.md",
-				"README.md"
-			]
-		}
+	  "pages": {
+	    "setting.html": {
+	      "href": "setting.html",
+	      "resources": [
+	        "js/mui.min.js",
+	        "js/mui.view.js",
+	        "libs/easymob-webim-sdk/jquery-1.11.1.js",
+	        "libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
+	        "libs/easymob-webim-sdk/json2.js",
+	        "libs/easymob-webim-sdk/easemob.im-1.0.5.js",
+	        "js/feedback.js",
+	        "js/feedback-page.js",
+	        "js/mui.locker.js",
+	        "js/app.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/feedback-page.css",
+	        "images/iconfont-tianjia.png",
+	        "images/user-photo.png",
+	        "images/cbd.jpg",
+	        "images/favicon.png",
+	        "js/base64.js",
+	        "images/yuantiao.jpg"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 1
+	    },
+	    "main.html": {
+	      "href": "main.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "js/mui.min.js",
+	        "js/app.js",
+	        "js/base64.js",
+	        "hub_add.html",
+	        "view_ctrls.html",
+	        "node_mg.html",
+	        "sub/gens.html",
+	        "sub/imgs.html",
+	        "sub/gpss.html"
+	      ],
+	      "refer": [
+	        "setting.html",
+	        "hub_mg.html",
+	        "hub_edit.html",
+	        "node_add.html",
+	        "node_edit.html",
+	        "sub/vals.html",
+	        "sub/imgs.html",
+	        "node_mg.html",
+	        "sub/gens.html",
+	        "hub_add.html",
+	        "sub/gpss.html",
+	        "view_ctrls.html"
+	      ],
+	      "priority": 1
+	    },
+	    "unlock.html": {
+	      "href": "unlock.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "js/mui.min.js",
+	        "js/mui.locker.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "login.html",
+	        "main.html"
+	      ],
+	      "priority": 0
+	    },
+	    "forget_password.html": {
+	      "href": "forget_password.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "js/app.js"
+	      ],
+	      "priority": 1
+	    },
+	    "reg.html": {
+	      "href": "reg.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 3
+	    },
+	    "login.html": {
+	      "href": "login.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/style.css",
+	        "js/mui.min.js",
+	        "js/mui.enterfocus.js",
+	        "js/app.js",
+	        "images/qihoo.png",
+	        "images/qq.png",
+	        "images/sinaweibo.png",
+	        "images/weixin.png",
+	        "js/base64.js"
+	      ],
+	      "refer": [
+	        "unlock.html",
+	        "forget_password.html",
+	        "main.html",
+	        "reg.html",
+	        "set_svc.html",
+	        "info.html"
+	      ],
+	      "priority": 0
+	    },
+	    "set_svc.html": {
+	      "resources": [
+	        "fonts/mui.ttf",
+	        "js/app.js",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "css/style.css"
+	      ],
+	      "refer": [
+	        "login.html"
+	      ],
+	      "priority": 0
+	    },
+	    "info.html": {
+	      "resources": [
+	        "css/app.css",
+	        "fonts/mui.ttf",
+	        "css/mui.min.css",
+	        "images/favicon.png",
+	        "js/mui.min.js",
+	        "css/style.css",
+	        "js/app.js"
+	      ],
+	      "refer": [],
+	      "priority": 0
+	    },
+	    "hub_add.html": {
+	      "resources": [
+	        "js/mui.min.js",
+	        "fonts/mui.ttf",
+	        "css/mui.min.css",
+	        "css/common.css",
+	        "js/app.js"
+	      ],
+	      "refer": [],
+	      "priority": 0
+	    },
+	    "hub_mg.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "images/yuantiao.jpg",
+	        "images/favicon.png",
+	        "js/mui.min.js",
+	        "js/app.js",
+	        "js/knockout-3.3.0.js",
+	        "fonts/mui.ttf",
+	        "hub_edit.html"
+	      ],
+	      "refer": [
+	        "hub_edit.html",
+	        "node_mg.html",
+	        "node_add.html"
+	      ],
+	      "priority": 0
+	    },
+	    "hub_edit.html": {
+	      "resources": [
+	        "js/app.js",
+	        "js/mui.min.js",
+	        "css/common.css",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "hub_mg.html"
+	      ],
+	      "priority": 0
+	    },
+	    "node_add.html": {
+	      "resources": [
+	        "js/app.js",
+	        "js/mui.min.js",
+	        "css/common.css",
+	        "css/mui.min.css",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "css/mui.poppicker.css",
+	        "css/mui.picker.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "hub_mg.html"
+	      ],
+	      "priority": 0
+	    },
+	    "node_mg.html": {
+	      "resources": [
+	        "js/knockout-3.3.0.js",
+	        "js/app.js",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "hub_mg.html",
+	        "node_edit.html"
+	      ],
+	      "priority": 0
+	    },
+	    "node_edit.html": {
+	      "resources": [
+	        "js/app.js",
+	        "js/mui.picker.js",
+	        "js/mui.min.js",
+	        "css/common.css",
+	        "js/mui.poppicker.js",
+	        "css/mui.min.css",
+	        "css/mui.poppicker.css",
+	        "css/mui.picker.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "node_mg.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view_ctrls.html": {
+	      "resources": [
+	        "js/app.js",
+	        "js/mui.min.js",
+	        "css/common.css",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "js/knockout-3.3.0.js",
+	        "js/vue.js",
+	        "images/qq.png",
+	        "images/val.png",
+	        "images/img.png",
+	        "images/gps.png",
+	        "images/gen.png",
+	        "view_ctrls.html",
+	        "sub/gens.html",
+	        "sub/gpss.html"
+	      ],
+	      "refer": [
+	        "sub/imgs.html",
+	        "sub/gens.html",
+	        "sub/vals.html",
+	        "sub/gpss.html"
+	      ],
+	      "priority": 0
+	    },
+	    "sub/gens.html": {
+	      "resources": [
+	        "js/vue.js",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "images/gen.png",
+	        "js/app.js",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [],
+	      "priority": 0
+	    },
+	    "sub/gpss.html": {
+	      "resources": [
+	        "js/vue.js",
+	        "js/app.js",
+	        "js/mui.min.js",
+	        "images/gen.png",
+	        "css/mui.min.css",
+	        "images/gps.png",
+	        "images/gps1.png",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [],
+	      "priority": 0
+	    },
+	    "sub/vals.html": {
+	      "resources": [
+	        "js/vue.js",
+	        "images/gen.png",
+	        "js/app.js",
+	        "images/val.png",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [],
+	      "priority": 0
+	    },
+	    "sub/imgs.html": {
+	      "resources": [
+	        "js/mui.lazyload.js",
+	        "js/mui.lazyload.img.js",
+	        "js/app.js",
+	        "js/vue.js",
+	        "js/mui.min.js",
+	        "css/mui.min.css",
+	        "images/img.png",
+	        "js/mui.previewimage.js",
+	        "js/mui.zoom.js",
+	        "js/mui.pullToRefresh.js",
+	        "js/mui.pullToRefresh.material.js",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [],
+	      "priority": 0
+	    }
+	  },
+	  "idle": {
+	    "resources": [
+	      "js/common.js",
+	      "Coolpy5App.iml",
+	      "js/immersed.js",
+	      "README.md"
+	    ]
+	  }
 	},
 	"unpackage":[
 	  "README.md"

@@ -1,1 +1,85 @@
-null
+{
+  "hub_edit.html": {
+    "href": "hub_edit.html",
+    "resources": [],
+    "refer": [
+      "hub_mg.html"
+    ],
+    "priority": 2
+  },
+  "node_add.html": {
+    "href": "node_add.html",
+    "resources": [
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "hub_mg.html"
+    ],
+    "priority": 4
+  },
+  "hub_mg.html": {
+    "href": "hub_mg.html",
+    "resources": [],
+    "refer": [
+      "node_mg.html",
+      "node_add.html"
+    ],
+    "priority": 2
+  },
+  "node_mg.html": {
+    "href": "node_mg.html",
+    "resources": [
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "hub_mg.html",
+      "node_edit.html"
+    ],
+    "priority": 2
+  },
+  "node_edit.html": {
+    "href": "node_edit.html",
+    "resources": [],
+    "refer": [
+      "node_mg.html"
+    ],
+    "priority": 2
+  },
+  "sub/imgs.html": {
+    "href": "sub/imgs.html",
+    "resources": [
+      "fonts/mui.ttf"
+    ],
+    "priority": 3
+  },
+  "sub/gens.html": {
+    "href": "sub/gens.html",
+    "resources": [
+      "fonts/mui.ttf"
+    ],
+    "priority": 8
+  },
+  "sub/vals.html": {
+    "href": "sub/vals.html",
+    "resources": [
+      "fonts/mui.ttf"
+    ],
+    "priority": 10
+  },
+  "sub/gpss.html": {
+    "href": "sub/gpss.html",
+    "resources": [
+      "fonts/mui.ttf"
+    ],
+    "priority": 12
+  },
+  "view_ctrls.html": {
+    "href": "view_ctrls.html",
+    "resources": [],
+    "refer": [
+      "sub/imgs.html",
+      "sub/vals.html"
+    ],
+    "priority": 13
+  }
+}

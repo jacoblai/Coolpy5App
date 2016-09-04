@@ -94,7 +94,8 @@
       "fonts/mui.ttf",
       "css/mui.min.css",
       "css/style.css"
-    ]
+    ],
+    "refer": []
   },
   "info.html": {
     "resources": [
@@ -105,7 +106,8 @@
       "js/mui.min.js",
       "css/style.css",
       "js/app.js"
-    ]
+    ],
+    "refer": []
   },
   "hub_add.html": {
     "resources": [
@@ -114,7 +116,8 @@
       "css/mui.min.css",
       "css/common.css",
       "js/app.js"
-    ]
+    ],
+    "refer": []
   },
   "hub_mg.html": {
     "resources": [
@@ -128,7 +131,9 @@
       "hub_edit.html"
     ],
     "refer": [
-      "hub_edit.html"
+      "hub_edit.html",
+      "node_mg.html",
+      "node_add.html"
     ]
   },
   "hub_edit.html": {
@@ -138,6 +143,9 @@
       "css/common.css",
       "css/mui.min.css",
       "fonts/mui.ttf"
+    ],
+    "refer": [
+      "hub_mg.html"
     ]
   },
   "node_add.html": {
@@ -150,6 +158,9 @@
       "js/mui.poppicker.js",
       "css/mui.poppicker.css",
       "css/mui.picker.css"
+    ],
+    "refer": [
+      "hub_mg.html"
     ]
   },
   "node_mg.html": {
@@ -158,6 +169,10 @@
       "js/app.js",
       "js/mui.min.js",
       "css/mui.min.css"
+    ],
+    "refer": [
+      "hub_mg.html",
+      "node_edit.html"
     ]
   },
   "node_edit.html": {
@@ -171,6 +186,9 @@
       "css/mui.poppicker.css",
       "css/mui.picker.css",
       "fonts/mui.ttf"
+    ],
+    "refer": [
+      "node_mg.html"
     ]
   },
   "view_ctrls.html": {
@@ -194,7 +212,9 @@
     "refer": [
       "view_ctrls.html",
       "sub/gens.html",
-      "sub/gpss.html"
+      "sub/gpss.html",
+      "sub/imgs.html",
+      "sub/vals.html"
     ]
   },
   "sub/gens.html": {
@@ -204,7 +224,8 @@
       "css/mui.min.css",
       "images/gen.png",
       "js/app.js"
-    ]
+    ],
+    "refer": []
   },
   "sub/gpss.html": {
     "resources": [
@@ -215,7 +236,8 @@
       "css/mui.min.css",
       "images/gps.png",
       "images/gps1.png"
-    ]
+    ],
+    "refer": []
   },
   "sub/vals.html": {
     "resources": [
@@ -225,7 +247,8 @@
       "images/val.png",
       "js/mui.min.js",
       "css/mui.min.css"
-    ]
+    ],
+    "refer": []
   },
   "sub/imgs.html": {
     "resources": [
@@ -240,6 +263,7 @@
       "js/mui.zoom.js",
       "js/mui.pullToRefresh.js",
       "js/mui.pullToRefresh.material.js"
-    ]
+    ],
+    "refer": []
   }
 }
